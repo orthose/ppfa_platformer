@@ -1,0 +1,7 @@
+module Position = Component.Make(struct include Vector let name = "position" end)
+module Velocity = Component.Make(struct include Vector let name = "velocity" end)
+module Box = Component.Make(struct include Rect let name = "box" end)
+module Surface = Component.Make (struct include Color let name = "color" end)
+module PC = Component.Make (struct include Player_control let name = "control" end)
+module Name = Component.Make(struct type t = string let name = "name" end)
+module Score = Component.Make(struct include Score let name = "score" end)
