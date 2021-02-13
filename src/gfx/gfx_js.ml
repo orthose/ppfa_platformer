@@ -20,7 +20,32 @@ let create s =
           Queue.add (Gfx_base.KeyUp (Js.to_string k)) events);
         Js._true);
       (canvas, ctx)
-      
+
+let create_offscreen w h =
+  let canvas = Dom_html.createCanvas Dom_html.document in
+    canvas ##. height := h;
+    canvas ##. width := w;
+    canvas##getContext Dom_html._2d_
+
+let render_width (ctx : render) =
+  ctx ##. canvas ##. width
+    
+let render_height (ctx : render) =
+  ctx ##. canvas ##. width
+    
+
+let blit (dst : render) (src : render) x y =
+  dst ## drawImage_fromCanvas (src ##. canvas) (float x) (float y)
+
+let blit_scale (dst : render) (src : render) dx dy dw dh =
+    dst ## drawImage_fromCanvasWithSize (src ##. canvas)
+     (float dx) (float dy) (float dw) (float dh)
+
+let blit_full (dst : render) (src : render) sx sy sw sh dx dy dw dh =
+    dst ## drawImage_fullFromCanvas (src ##. canvas)
+    (float sx) (float sy) (float sw) (float sh)
+    (float dx) (float dy) (float dw) (float dh)
+  
 let color r g b a = 
   "rgba(" ^ string_of_int r ^ ", " ^
             string_of_int g ^ ", " ^
@@ -35,19 +60,47 @@ let color r g b a =
 *)
 let clear_rect (ctx : render) x y w h = 
   ctx ## clearRect (float x) (float y) (float w) (float h)
+
 let fill_rect (ctx : render) x y w h c =
   (* Firebug.console ## log (Js.string c); *)
     ctx ##. fillStyle := Js.string c;
     ctx ## fillRect (float x) (float y) (float w) (float h)
 
+type image = Dom_html.imageElement Js.t
 
-let draw_text (ctx : render) text x y font =
+let load_image src =
+  let img = Dom_html.createImg Dom_html.document in
+  img ##.src := Js.string src;
+  img
+
+let image_ready img =
+  Js.to_bool img ##.complete
+
+let draw_image (ctx : render) img x y =
+  ctx ## drawImage img (float x) (float y)
+  
+let draw_image_scale (ctx : render) img dx dy dw dh =
+  ctx ## drawImage_withSize img  (float dx) (float dy) (float dw) (float dh)
+  
+let draw_image_full (ctx : render) img sx sy sw sh dx dy dw dh =
+  ctx ## drawImage_full img 
+  (float sx) (float sy) (float sw) (float sh)
+  (float dx) (float dy) (float dw) (float dh)
+
+let draw_text (ctx : render) text x y font color =
   ctx ##. font := Js.string font;
+  ctx ##. fillStyle := Js.string color;
   ctx ## fillText (Js.string text) (float x) (float y)
+
+let measure_text (ctx : render) text font =
+  ctx ##. font := Js.string font;
+  let m = ctx ## measureText (Js.string text) in
+  int_of_float (m ##. width)
 
 let poll_event () =
   if Queue.is_empty events then Gfx_base.NoEvent
   else Queue.pop events
+
 
 let main_loop f =
   let cb = ref (Js.wrap_callback (fun _ -> ())) in
@@ -56,4 +109,7 @@ let main_loop f =
         ignore (Dom_html.window ## requestAnimationFrame (!cb))
   in
   cb := Js.wrap_callback loop;
-  ignore (Dom_html.window ## requestAnimationFrame !cb)
+  ignore(Dom_html.window ## requestAnimationFrame !cb)
+
+let debug msg =
+  Firebug.console ## log (Js.string msg)

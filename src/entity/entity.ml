@@ -15,3 +15,4 @@ end
 
 module Table = Hashtbl.Make(E)
 include E
+let dummy = -1

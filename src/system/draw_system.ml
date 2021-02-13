@@ -1,5 +1,4 @@
 open Component_defs
-open Vector
 
 let ctx = ref None
 let init () =
@@ -12,19 +11,26 @@ let update _dt el =
   List.iter (fun e ->
     let pos = Position.get e in
     let box = Box.get e in
-    let color = Surface.get e in
-    Gfx.fill_rect ctx (int_of_float pos.x)
-                         (int_of_float pos.y)
-                          box.width
-                          box.height
-                          color;
-    ) el;
-  List.iter (fun (_, (s, p)) ->
-    Gfx.draw_text ctx 
-      (string_of_int s)
-      (int_of_float p.x) 
-      (int_of_float p.y)
-      "30px Arial";
-    (*if s >= 5 then*)
-      
-  ) (Score.members ())
+    match Surface.get e with
+      | Color(color) -> 
+        Gfx.fill_rect ctx 
+          (int_of_float pos.x)
+          (int_of_float pos.y)
+          box.width
+          box.height
+          color
+      | Image(render) -> 
+        Gfx.blit_scale ctx render
+          (int_of_float pos.x)
+          (int_of_float pos.y)
+          box.width
+          box.height
+      | Animation(animation) ->
+        let v = Velocity.get e in
+        let render = Texture.get_frame animation (int_of_float v.x) in
+        Gfx.blit_scale ctx render
+          (int_of_float pos.x)
+          (int_of_float pos.y)
+          box.width
+          box.height
+    ) el

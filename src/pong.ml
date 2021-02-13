@@ -1,108 +1,69 @@
-open Component_defs
-open System_defs
-
 (* All our objects *)
-(*
-  Our canvas will be 800 x 600
-  paddles : 20x50
-  walls 800x20
-  invisible walls behind the paddles 40x560
 
-  For each object we associate components and systems.
-*)
+let bg_img = Gfx.load_image "./images/clay.png"
+let ball_img = Gfx.load_image "./images/ball_frames.png"
 
-let create_paddle name x y x' y' kup kdown =
-  let e = Entity.create () in
-  (* components *)
-  Position.set e { x = x; y = y};
-  Box.set e {width = 20; height=80 };
-  Name.set e name;
-  Surface.set e Color.black;
-  Score.set e (0, {x = x'; y = y'});
-  PC.set e [ (kup, Move_Up); (kdown, Move_Down)];
+let load_graphics _dt = 
+  not (Gfx.image_ready bg_img
+    && Gfx.image_ready ball_img)
 
-  (* systems *)
-  Logic_S.register e;
-  Control_S.register e;
-  Draw_S.register e
+let player1 =
+  Player.create "player1" Globals.player1_init_x Globals.player_init_y
+let player2 =
+  Player.create "player2" Globals.player2_init_x Globals.player_init_y
+let wall_top = Wall.create "wall_top" 0.0 0.0
+let wall_bottom = Wall.create "wall_bottom" 0.0 580.0
+let iwall_left = Score_zone.create "wall_left" player2 0.0 20.0
+let iwall_rght = Score_zone.create "wall_right" player1 760.0 20.0
 
-
-let create_wall name x y =
-  let e = Entity.create () in
-
-  (* components *)
-  Position.set e { x = x; y = y};
-  Box.set e {width = 800; height=20 };
-  Name.set e name;
-  Surface.set e Color.red;
-
-  (* Systems *)
-  Logic_S.register e;
-  Draw_S.register e
-
-
-let create_inv_wall name x y =
-  let e = Entity.create () in
-  (* components *)
-  Position.set e { x = x; y = y};
-  Box.set e {width = 40; height=560 };
-  Name.set e name;
-
-  (* systems *)
-  Logic_S.register e
+let init_game _dt = 
+  System.init_all ();
+  let ball = Ball.create "ball" 
+    Globals.ball_player1_init_x 
+    Globals.ball_init_y 
+    ball_img
+  in
+  let _bg = Bg.create bg_img in
   
-let create_net name x y =
-  let e = Entity.create () in
-  
-  (* components *)
-  Position.set e { x = x; y = y};
-  Box.set e {width = 20; height=600 };
-  Surface.set e Color.grey;
-  Name.set e name;
+  Input_handler.register_command (KeyDown "w") (fun () -> Player.move_up player1);
+  Input_handler.register_command (KeyDown "s") (fun () -> Player.move_down player1);
+  Input_handler.register_command (KeyUp "w") (fun () -> Player.stop player1);
+  Input_handler.register_command (KeyUp "s") (fun () -> Player.stop player1);
 
-  (* systems *)
-  Draw_S.register e
+  Input_handler.register_command (KeyDown "i") (fun () -> Player.move_up player2);
+  Input_handler.register_command (KeyDown "k") (fun () -> Player.move_down player2);
+  Input_handler.register_command (KeyUp "i") (fun () -> Player.stop player2);
+  Input_handler.register_command (KeyUp "k") (fun () -> Player.stop player2);
 
-let create_ball x y =
-  let e = Entity.create () in
-  (* components *)
-  Position.set e {x = x; y = y };
-  Box.set e {width = 20 ; height = 20};
-  Velocity.set e { x = 0.0; y = 0.0 };
-  PC.set e [ ("n", Launch) ];
-  Name.set e "ball";
-  Surface.set e Color.blue;
+  Input_handler.register_command (KeyDown "n") (fun () -> Ball.launch ball);
+  Game_state.init ball player1 player2;
+  false
 
-  (* systems *)
-  Logic_S.register e;
-  Control_S.register e;
-  Move_S.register e;
-  Draw_S.register e
+(* *)
 
-let player1 = create_paddle "player1" 40.0 260.0 ((1. /. 4.) *. 800.) ((1. /. 2.) *. 600.) "w" "s"
-let player2 = create_paddle "player2" 740.0 260.0 ((3. /. 4.) *. 800.) ((1. /. 2.) *. 600.) "i" "k"
-let wall_top = create_wall "wall_top" 0.0 0.0
-let wall_bottom = create_wall "wall_bottom" 0.0 580.0
+let chain_functions f_list =
+  let funs = ref f_list in
+  fun dt -> match !funs with
+    | [] -> false
+    | f :: ll -> 
+        if f dt then true
+        else begin
+          funs := ll;
+          true
+        end
 
-let iwall_left = create_inv_wall "wall_left" 0.0 20.0
-let iwall_rght = create_inv_wall "wall_right" 760.0 20.0
-
-let net = create_net "middle_net" (800. /. 2.0) 0.0
-
-let ball = create_ball 70.0 290.0
-
-
-(* Now our systems *)
-let init () = System.init_all ()
-
-let update dt =
+let play_game dt =
   (* Update all systems *)
   System.update_all dt;
-  (* Repeat indefinitely *)
-  true
+  (* One player reach 10 points *)
+  Game_state.get_score1 () < 10 && Game_state.get_score2 () < 10
+  
+let end_game _dt = false
 
-let update_loop () = Gfx.main_loop update
+let f_lists = [load_graphics; init_game; play_game; end_game]
+
+let update_loop () = 
+  Gfx.main_loop (chain_functions f_lists)
 
 let () =
-  init ();
   update_loop ()

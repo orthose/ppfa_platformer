@@ -12,4 +12,8 @@ struct
     Not_found -> raise (MissingComponent(e, T.name))
 
   let members () = Entity.Table.fold (fun k v a -> (k, v) :: a) elements []
+
+  let has_component e = Entity.Table.mem elements e
+
+  let delete e = Entity.Table.remove elements e
 end
