@@ -1,3 +1,5 @@
+open Ecs
+
 type turn = Playing
   | Player1Lost
   | Player2Lost

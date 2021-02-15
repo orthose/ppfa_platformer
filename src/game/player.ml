@@ -1,7 +1,6 @@
 open Component_defs
 open System_defs
-
-
+open Ecs
 
 let create name x y =
   let e = Entity.create () in

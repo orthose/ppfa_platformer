@@ -1,3 +1,5 @@
+open Ecs
+
 module Control_S = System.Make (Control_system)
 module Draw_S = System.Make(Draw_system)
 module Move_S = System.Make(Move_system)

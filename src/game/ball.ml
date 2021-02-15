@@ -1,5 +1,6 @@
 open Component_defs
 open System_defs
+open Ecs
 
 let random_dir tmin tmax n =
   let t = tmin +. Random.float (tmax -. tmin) in

@@ -1,1 +1,3 @@
+open Ecs
+
 val create : string -> Entity.t -> float -> float -> Entity.t

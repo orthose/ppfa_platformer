@@ -1,7 +1,6 @@
 open Component_defs
 open System_defs
-
-
+open Ecs
 
 let resolve_collision self other =
   if other == Game_state.get_ball () then begin

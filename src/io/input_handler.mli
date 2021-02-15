@@ -1,2 +1,4 @@
-val register_command : Gfx_base.event -> (unit -> unit) -> unit
-val get_commands : Gfx_base.event -> (unit -> unit) list
+
+
+val register_command : Gfx.event -> (unit -> unit) -> unit
+val get_commands : Gfx.event -> (unit -> unit) list

@@ -1,3 +1,5 @@
+open Ecs
+
 module Position = Component.Make(struct include Vector let name = "position" end)
 module Velocity = Component.Make(struct include Vector let name = "velocity" end)
 module Mass = Component.Make (struct type t = float let name = "mass" end)

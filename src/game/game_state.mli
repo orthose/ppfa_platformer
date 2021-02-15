@@ -1,3 +1,5 @@
+open Ecs
+
 type turn = Playing | Player1Lost | Player2Lost
 val init : Entity.t -> Entity.t -> Entity.t -> unit
 val get_score1 : unit -> int

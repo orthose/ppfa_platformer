@@ -1,5 +1,6 @@
 open Component_defs
 open System_defs
+open Ecs
 
 let walls = Entity.Table.create 17
 
