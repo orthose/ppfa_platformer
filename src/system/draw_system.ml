@@ -2,8 +2,7 @@ open Component_defs
 
 let ctx = ref None
 let init () =
-  (* BOGUE !!! *)
-  let _, c = Gfx.create "canvas"  in
+  let _, c = Gfx.create "game_canvas:800x600:"  in
   ctx := Some c
 
 let update _dt el =

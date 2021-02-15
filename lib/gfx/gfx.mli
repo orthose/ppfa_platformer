@@ -6,6 +6,8 @@ type color   (* type of colors *)
 type image   (* type of images *)
 
 val create : string -> window * render
+(* Format: id:largeurxhauteur:flags *)
+(* Les flags c'est pour SDL *)
 (** creates a window and a rendering surface from the string s. The
     string is implementation defined *)
 
