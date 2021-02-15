@@ -2,8 +2,10 @@
 Projet de PFA (Programmation Fonctionnelle Avancée) L3 INFO S6 Université Paris-Saclay, ayant pour but la création d'un jeu-vidéo de type plateforme.
 
 # L'équipe des étudiants
-Maxime Vincent
-Clément Pham Van
+* Maxime Vincent
+* Clément Pham Van
+
+Université Paris-Saclay 2021
 
 # Site du cours
 [Kim Nguyen](https://www.lri.fr/~kn/ppfa_en.html)
