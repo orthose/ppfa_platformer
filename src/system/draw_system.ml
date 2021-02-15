@@ -2,6 +2,7 @@ open Component_defs
 
 let ctx = ref None
 let init () =
+  (* BOGUE !!! *)
   let _, c = Gfx.create "canvas"  in
   ctx := Some c
 
