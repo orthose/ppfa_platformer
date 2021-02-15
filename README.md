@@ -24,3 +24,8 @@ Université Paris-Saclay 2021
 
 # Lancement du jeu
 `firefox index.html`
+
+# Architecture du projet
+
+* Le fichier TODO.md contient toutes les tâches en cours
+et effectuées. Cela donne un aperçu de l'avancement du projet.
