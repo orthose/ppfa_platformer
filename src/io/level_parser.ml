@@ -4,8 +4,8 @@ type t =
 
 (* Lien string -> constructeur *)
 let link = function
-  | "-" -> Empty
-  | "*" -> Ground
+  | '-' -> Empty
+  | '*' -> Ground
   | _ -> failwith "Unknown token"
 
 let parse level =
@@ -17,7 +17,7 @@ let parse level =
       input_line file
     with End_of_file ->
       let () = close_in file in
-      failwith "Empty level file"
+      failwith "Empty level file or empty first line"
   in
   
   let w = String.length first in
@@ -29,26 +29,22 @@ let parse level =
       if String.length line <> w then
         failwith "Parsing error inconsistent format for line width"
       else
-        
         list_of_lines (
-          (fun r -> (fst acc) ((Str.split (Str.regexp "") line) :: r)),
+          line :: (fst acc),
           1 + (snd acc)
         )
     with End_of_file -> 
-      let () = close_in file in 
-      let (cps, h) = acc in
-      (cps [], h)
+      let () = close_in file in acc
   in
-  let (lol, h) = list_of_lines (
-    (fun x -> (Str.split (Str.regexp "") first) :: x), 1) in
+  let (lol, h) = list_of_lines ([first], 1) in
   
   let res = Array.make_matrix h w Empty in
   
   (* Remplissage de la matrice *)
-  List.iteri (fun i l ->
-    List.iteri (fun j x ->
-      res.(i).(j) <- link x
-    ) l
+  List.iteri (fun i s ->
+    String.iteri (fun j c ->
+      res.(h - 1 - i).(j) <- link c
+    ) s
   ) lol; res
   
 let filter token =
