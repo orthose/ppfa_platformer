@@ -1,6 +1,4 @@
-type t =
-  | Empty
-  | Ground
+open Level
 
 (* Lien string -> constructeur *)
 let link = function
@@ -8,8 +6,8 @@ let link = function
   | '*' -> Ground
   | _ -> failwith "Unknown token"
 
-let parse level =
-  let file = open_in level in
+let parse level_file =
+  let file = open_in level_file in
   
   (* Initialisation *)
   let first = 
@@ -46,20 +44,3 @@ let parse level =
       res.(h - 1 - i).(j) <- link c
     ) s
   ) lol; res
-  
-let filter token =
-  Array.map (fun a ->
-    Array.map (fun el ->
-      if token = el then token
-      else Empty
-    ) a
-  )
-  
-  
-  
-  
-  
-  
-  
-  
-  

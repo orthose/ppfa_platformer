@@ -1,6 +1,12 @@
 (* Définitions globales, qu'on suppose constantes *)
 let canvas_width = 800
 let canvas_height = 600
+
+(* Unité d'échantillonnage de la matrice de niveau *)
+let unit_width = (canvas_width * 10) / 100
+let unit_height = unit_width
+let unit_box = Rect.{width = unit_width; height = unit_height}
+
 let ball_size = 20
 let wall_thickness = 20
 
