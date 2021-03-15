@@ -1,4 +1,4 @@
-open Component_defs
+(*open Component_defs
 open System_defs
 open Ecs
 
@@ -13,7 +13,7 @@ let pi = 2. *. asin 1.0
 let create name x y sprite =
   let e = Entity.create () in
   (* components *)
-  Position.set e {x = x; y = y };
+  Position.set e (Point {x = x; y = y });
   Box.set e {width = 20 ; height = 20};
   Velocity.set e { x = 0.0; y = 0.0 };
   Mass.set e 10.0;
@@ -48,4 +48,4 @@ let launch e =
     | Player2Lost ->
       let v = random_dir (2.0 *. pi/. 3.0) (4.0 *. pi /. 3.0) 200.0 in
       Velocity.set e v;
-      Game_state.play()
+      Game_state.play()*)

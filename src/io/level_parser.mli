@@ -1,2 +1,2 @@
-val link : char -> Level.platform
+val link : char -> Level.t
 val parse : string -> Level.level

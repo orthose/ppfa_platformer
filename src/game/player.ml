@@ -4,10 +4,10 @@ open Ecs
 
 let create name x y =
   let e = Entity.create () in
-  Position.set e { x = x; y = y};
+  Position.set e (Point { x = x; y = y});
   Velocity.set e Vector.zero;
   Mass.set e infinity;
-  Box.set e {width = Globals.paddle_width; height=Globals.paddle_height };
+  Box.set e Globals.player_box;
   Name.set e name;
   Surface.set e Texture.black;
 
@@ -20,15 +20,13 @@ let create name x y =
   e
 
 let reset e x y = 
-  Position.set e { x = x; y = y }
+  Position.set e (Point { x = x; y = y })
 
 let move_up e =
-  if Game_state.get_turn () == Playing then
-    Velocity.set e { x = 0.0; y = -100.0 }
+  Velocity.set e { x = 0.0; y = -100.0 }
   
 let move_down e =
-  if Game_state.get_turn () == Playing then
-    Velocity.set e { x = 0.0; y = 100.0 }
+  Velocity.set e { x = 0.0; y = 100.0 }
 
 let stop e =
   Velocity.set e Vector.zero

@@ -7,7 +7,10 @@ let create name level =
   let e = Entity.create () in
   
   (* components *)
-  ListBox.set e (Ground, Level.filter_to_listbox Ground level);
+  Platform.set e Ground;
+  Box.set e Globals.unit_box;
+  Position.set e (MultiPoint 
+    (Level.filter_to_listbox Ground level));
   Velocity.set e Vector.zero;
   Mass.set e infinity;
   Name.set e name;

@@ -1,6 +1,29 @@
 open Ecs
 
-type turn = Playing
+type t = {
+  player : Entity.t;
+  mutable score : int;
+  mutable game_over : bool
+}
+
+let state = ref {
+  player = Entity.dummy;
+  score = 0;
+  game_over = false
+}
+
+let get_player () = !state.player
+let get_score () = !state.score
+let get_game_over () = !state.game_over
+
+let incr_score () = 
+  !state.score <- !state.score + 1
+  
+let init e =
+  state := {!state with player = e}
+
+
+(*type turn = Playing
   | Player1Lost
   | Player2Lost
 
@@ -44,4 +67,4 @@ let player_score e =
 
 
 let init be pe1 pe2 =
-  state := { !state with ball = be; player1 = pe1; player2 = pe2 }
+  state := { !state with ball = be; player1 = pe1; player2 = pe2 }*)

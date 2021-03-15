@@ -1,4 +1,4 @@
-open Component_defs
+(*open Component_defs
 open System_defs
 open Ecs
 
@@ -17,12 +17,14 @@ let resolve_collision self other =
         Globals.ball_player1_init_x
     in
     Ball.reset other bx Globals.ball_init_y
-  end
+  end*)
+(*let resolve_collision _self _other = Entity.dummy
+
 
 let create name player x y =
   let e = Entity.create () in
   (* components *)
-  Position.set e { x = x; y = y};
+  Position.set e (Point { x = x; y = y});
   Velocity.set e Vector.zero;
   Mass.set e infinity;
   Box.set e {width = Globals.score_zone_width; height=Globals.score_zone_height };
@@ -31,4 +33,4 @@ let create name player x y =
   CollisionResolver.set e resolve_collision;
   (* systems *)
   Collision_S.register e;
-  e
+  e*)

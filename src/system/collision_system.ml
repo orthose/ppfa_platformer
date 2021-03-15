@@ -3,7 +3,10 @@ open Component_defs
 let init () = ()
 
 (* les composants du rectangle r1 et r2 sont pos1 box1 pos2 box2 *)
-let compute_collision e1 e2 pos1 box1 pos2 box2 =
+let compute_collision e1 e2 pos1 pos2 =
+  (* les box *)
+  let box1 = Box.get e1 in
+  let box2 = Box.get e2 in
   (* les vitesses *)
   let v1 = Velocity.get e1 in
   let v2 = Velocity.get e2 in
@@ -22,6 +25,9 @@ let compute_collision e1 e2 pos1 box1 pos2 box2 =
       if Vector.norm v  < Vector.norm min_v then v else min_v) 
       a [ b; c ; d]
     in
+    
+    (* Gravité vecteur accélération avec état global resting *)
+    
     (*  [4] rapport des vitesses et déplacement des objets *)
     let n_v1 = Vector.norm v1 in
     let n_v2 = Vector.norm v2 in
@@ -29,9 +35,10 @@ let compute_collision e1 e2 pos1 box1 pos2 box2 =
     let n1 = n_v1 /. s in
     let n2 = n_v2 /. s in
     let delta_pos1 = Vector.mult n1 n in
-    let delta_pos2 = Vector.mult (Float.neg n2) n in
-    Position.set e1 (Vector.add pos1 delta_pos1);
-    Position.set e2 (Vector.add pos2 delta_pos2);
+    let _delta_pos2 = Vector.mult (Float.neg n2) n in
+    Position.set e1 (Point (Vector.add pos1 delta_pos1));
+    (* On considère statique l'entité e2 *)
+    (*Position.set e2 (Vector.add pos2 delta_pos2);*)
   
     (* [5] On normalise n (on calcule un vecteur de même direction mais de norme 1) *)
     let n = Vector.normalize n in
@@ -69,42 +76,35 @@ let compute_collision e1 e2 pos1 box1 pos2 box2 =
   end
 
 let update _dt el =
-  List.iteri (fun i e1 ->
-    List.iteri (fun j e2 ->
+  List.iter (fun e1 ->
+    List.iter (fun e2 ->
       (* Une double boucle qui évite de comparer deux fois
          les objets : si on compare A et B, on ne compare pas B et A.
          Il faudra améliorer cela si on a beaucoup (> 30) objets simultanément.
       *)
-      if j > i then
-      
+      if e1 <> e2 then
+        
+        (* Entité simple joueur ou ennemi *)
+        let pos1 =
+          match Position.get e1 with
+          | Point pos -> pos
+          | _ -> failwith "Basic entity hasn't simple position"
+        in
+        
         (* Le système de collision doit faire la différence
         entre une box simple et une liste de box issue du
         parser de niveau *)
-        match (ListBox.has_component e1, ListBox.has_component e2) with
-        | (false, false) -> compute_collision 
-            e1 e2 
-            (Position.get e1)
-            (Box.get e1)
-            (Position.get e2)
-            (Box.get e2)
-        | (true, false) -> List.iter (fun pos ->
-            compute_collision 
-            e1 e2 
-            pos
-            Globals.unit_box 
-            (Position.get e2)
-            (Box.get e2)
-          ) (snd (ListBox.get e1))
-          (* Peut-être qu'il faudra utiliser fst (ListBox.get e1)
-          pour des comportements spécifiques à chaque plateforme *)
-        | (false, true) -> List.iter (fun pos ->
-            compute_collision 
-            e1 e2 
-            (Position.get e1)
-            (Box.get e1)
-            pos
-            Globals.unit_box
-          ) (snd (ListBox.get e2))  
-        | (true, true) -> ()
-            (* Pas traité pour le moment *)
-    ) el) el
+        match Position.get e2 with
+        | Point pos2 ->
+            compute_collision
+            e1 e2
+            pos1 pos2
+        | MultiPoint lpos ->
+            (* Améliorer en ne regardand que les objets proches 
+            de e1 et dans l'écran *)
+            List.iter (fun pos2 ->
+              compute_collision
+              e1 e2
+              pos1 pos2
+              ) lpos
+    ) el) [(Game_state.get_player ())]

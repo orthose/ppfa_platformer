@@ -1,15 +1,10 @@
 (* Les différents types de plateforme *)
-type platform =
+type t =
   | Empty
   | Ground
 
 (* Matrice des plateformes *)
-type level = platform array array
-
-(* Liste des positions de box *)
-type listbox = Vector.t list
-
-type t = platform * listbox
+type level = t array array
 
 let filter token =
   Array.map (fun a ->
@@ -20,6 +15,7 @@ let filter token =
   )
   
 let filter_to_listbox platform level =
+  let (w, h) = (Globals.unit_box.width, Globals.unit_box.height) in
   ! (fst (
     Array.fold_left (fun acc1 a ->
       let _ =
@@ -27,8 +23,8 @@ let filter_to_listbox platform level =
           if platform = b then
             let i = snd acc1 in
             let j = acc2 in
-            let x = j * Globals.unit_width in
-            let y = i * Globals.unit_height in
+            let x = j * w in
+            let y = i * h in
             fst acc1 := 
               Vector.{
                 x = float_of_int x;

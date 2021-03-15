@@ -1,11 +1,11 @@
-open Component_defs
+(*open Component_defs
 open System_defs
 open Ecs
 
 let create i =
   let e = Entity.create () in
   
-  Position.set e {x = 0.; y = 0.};
+  Position.set e (Point {x = 0.; y = 0.});
   Box.set e {width = Globals.canvas_width; 
     height = Globals.canvas_height};
   Surface.set e (
@@ -15,4 +15,4 @@ let create i =
   );
     
   Draw_S.register e;
-  e
+  e*)

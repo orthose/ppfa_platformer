@@ -1,3 +1,3 @@
-open Ecs
+(*open Ecs
 
-val create : string -> Entity.t -> float -> float -> Entity.t
+val create : string -> Entity.t -> float -> float -> Entity.t*)
