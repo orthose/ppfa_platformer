@@ -44,6 +44,7 @@ let init_game _dt =
 
 let play_game dt =
   Player.do_move ();
+  Enemy.do_move ();
   System.update_all dt;
   (* One player reach 10 points *)
   (*Game_state.get_score1 () < 10 && Game_state.get_score2 () < 10*)
