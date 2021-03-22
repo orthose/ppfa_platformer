@@ -19,8 +19,7 @@ let create name x y =
   Name.set e name;
   Surface.set e Texture.black;
   SumForces.set e Vector.zero;
-  Resting.set e false;
-  Friction.set e 0.0;
+  Resting.set e Entity.dummy;
 
   (* systems *)
   Collision_S.register e;
@@ -43,10 +42,10 @@ let do_move () =
   *)
   if action.move_left then move Globals.left;
   if action.move_right then move Globals.right;
-  if action.jump && r then begin
+  if action.jump && r <> Entity.dummy then begin
     (* On peut ici implémenter un double saut *)
     move Globals.jump;
-    Resting.set (Game_state.get_player ()) false  
+    Resting.set (Game_state.get_player ()) Entity.dummy  
   end
 
 let jump () = action.jump <- true

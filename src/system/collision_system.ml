@@ -1,4 +1,5 @@
 open Component_defs
+open Ecs
 
 let init () = ()
 
@@ -39,10 +40,13 @@ let compute_collision e1 e2 pos1 pos2 =
     let delta_pos1 = Vector.mult n1 n in
     let _delta_pos2 = Vector.mult (Float.neg n2) n in
     Position.set e1 (Point (Vector.add pos1 delta_pos1));
-    (* On considère statique l'entité e2 *)
+    (* Simplification: Inutile l'entité e2 est statique *)
     (*Position.set e2 (Vector.add pos2 delta_pos2);*)
-    if Resting.has_component e1 then Resting.set e1 (n == c);
-    if Resting.has_component e2 then Resting.set e2 (n == c);
+    if Resting.has_component e1 then Resting.set e1 (
+      if n = c then e2 else Entity.dummy
+      );
+    (* Simplification: Inutile car e2 n'est pas censée avoir de resting *)
+    (*if Resting.has_component e2 then Resting.set e2 (n == c);*)
   
     (* [5] On normalise n (on calcule un vecteur de même direction mais de norme 1) *)
     let n = Vector.normalize n in
@@ -70,10 +74,12 @@ let compute_collision e1 e2 pos1 pos2 =
     in
     (* [8] calcul des nouvelles vitesses *)
     let new_v1 = Vector.add v1 (Vector.mult (j/. m1) n) in
-    let new_v2 = Vector.sub v2 (Vector.mult (j/. m2) n) in
+    (* Simplification: Inutile car e2 est censée rester immobile *)
+    (*let new_v2 = Vector.sub v2 (Vector.mult (j/. m2) n) in*)
     (* [9] mise à jour des vitesses *)
     Velocity.set e1 new_v1;
-    Velocity.set e2 new_v2;
+    (* Simplification: Inutile car e2 est censée rester immobile *)
+    (*Velocity.set e2 new_v2;*)
     (* [10] appel des resolveurs *)
     if CollisionResolver.has_component e1 then (CollisionResolver.get e1) e1 e2;
     if CollisionResolver.has_component e2 then (CollisionResolver.get e2) e2 e1

@@ -9,6 +9,7 @@ let player_box = Rect.{width = 16; height = 32}
 
 (* Constantes du moteur physique *)
 let gravity = Vector.{ x = 0.0; y = 0.001 }
+let friction = -0.20
 let jump = Vector.{ x = 0.0; y = -0.15 }
 let left = Vector.{ x = -0.05 ; y = 0.0 }
 let right = Vector.{ x = 0.05 ; y = 0.0 }

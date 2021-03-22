@@ -1,4 +1,6 @@
 open Component_defs
+open Ecs
+
 let init () = ()
 
 let last_dt = ref 0.0
@@ -21,7 +23,11 @@ let update dt el =
     let forces = Vector.add forces (Vector.mult mass g) in (* on ajoute la gravité *)
     let forces =
         (* on ajoute les frottements du support *)
-        let friction = Friction.get e in
+        let platform = Resting.get e in
+        let friction =
+          if platform = Entity.dummy then Globals.friction
+          else Friction.get platform
+        in
         let f = Vector.mult (mass /. delta) { x= old_v.x *. friction ; y = 0.0 } in
         Vector.add f forces
     in
