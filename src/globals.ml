@@ -7,19 +7,8 @@ let unit_box = Rect.{width = 32; height = 32}
 
 let player_box = Rect.{width = 16; height = 32}
 
-(*let ball_size = 20
-let wall_thickness = 20
-
-let score_zone_width = 40
-let score_zone_height = canvas_height - 2* wall_thickness
-
-let paddle_width = 20
-let paddle_height = 80
-
-let player_init_y = float (canvas_height / 2 - paddle_height / 2)
-
-let player1_init_x = float score_zone_width
-let player2_init_x = float (canvas_width - score_zone_width - paddle_width)
-let ball_init_y = float (canvas_height / 2 - ball_size / 2)
-let ball_player1_init_x = player1_init_x +. float (paddle_width) +. 10.0
-let ball_player2_init_x = player2_init_x -. 10.0 -. float ball_size*)
+(* Constantes du moteur physique *)
+let gravity = Vector.{ x = 0.0; y = 0.001 }
+let jump = Vector.{ x = 0.0; y = -0.15 }
+let left = Vector.{ x = -0.05 ; y = 0.0 }
+let right = Vector.{ x = 0.05 ; y = 0.0 }

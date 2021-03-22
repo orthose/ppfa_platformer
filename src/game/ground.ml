@@ -15,6 +15,8 @@ let create name level =
   Mass.set e infinity;
   Name.set e name;
   Surface.set e Texture.red;
+  Elasticity.set e 0.0;
+  Friction.set e (-0.25);
 
   (* Systems *)
   Collision_S.register e;

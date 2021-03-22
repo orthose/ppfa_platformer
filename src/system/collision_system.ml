@@ -3,6 +3,8 @@ open Component_defs
 let init () = ()
 
 (* les composants du rectangle r1 et r2 sont pos1 box1 pos2 box2 *)
+(* e1 = entité déplaçable player ou ennemy *)
+(* e2 = plateforme statique avec elastacité *)
 let compute_collision e1 e2 pos1 pos2 =
   (* les box *)
   let box1 = Box.get e1 in
@@ -16,6 +18,8 @@ let compute_collision e1 e2 pos1 pos2 =
   if Rect.has_origin s_pos s_rect &&
     not (Vector.is_zero v1 && Vector.is_zero v2)
   then begin
+    (* La friction de la plateforme est transmise au joueur *)
+    Friction.set e1 (Friction.get e2);
     (* [3] le plus petit des vecteurs a b c d *)
     let a = Vector.{ x = s_pos.x; y = 0.0} in
     let b = Vector.{ x = float s_rect.width +. s_pos.x; y = 0.0 } in
@@ -25,8 +29,6 @@ let compute_collision e1 e2 pos1 pos2 =
       if Vector.norm v  < Vector.norm min_v then v else min_v) 
       a [ b; c ; d]
     in
-    
-    (* Gravité vecteur accélération avec état global resting *)
     
     (*  [4] rapport des vitesses et déplacement des objets *)
     let n_v1 = Vector.norm v1 in
@@ -51,7 +53,7 @@ let compute_collision e1 e2 pos1 pos2 =
     (* Elasticité fixe. En pratique, l'elasticité peut être stockée dans
     les objets comme un composant : 1 pour la balle et les murs, 0.5 pour
     des obstacles absorbants, 1.2 pour des obstacles rebondissant, … *)
-    let e = 0.0 in
+    let e = Elasticity.get e2 in
   
     (* normalisation des masses *)
     let m1 = Mass.get e1 in
@@ -102,7 +104,7 @@ let update _dt el =
             e1 e2
             pos1 pos2
         | MultiPoint lpos ->
-            (* Améliorer en ne regardand que les objets proches 
+            (* Améliorer en ne regardant que les objets proches 
             de e1 et dans l'écran *)
             List.iter (fun pos2 ->
               compute_collision

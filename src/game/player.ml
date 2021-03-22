@@ -20,6 +20,7 @@ let create name x y =
   Surface.set e Texture.black;
   SumForces.set e Vector.zero;
   Resting.set e false;
+  Friction.set e 0.0;
 
   (* systems *)
   Collision_S.register e;
@@ -40,10 +41,11 @@ let do_move () =
   (* Si on teste r pour les mouvement horizontaux, on ne peut
      pas diriger le personnage en l'air : difficile de le contrôler
   *)
-  if action.move_left then move { x = -10. ; y = 0.0 };
-  if action.move_right then move { x = 10. ; y = 0.0 };
+  if action.move_left then move Globals.left;
+  if action.move_right then move Globals.right;
   if action.jump && r then begin
-    move { x = 0.0; y = -50. };
+    (* On peut ici implémenter un double saut *)
+    move Globals.jump;
     Resting.set (Game_state.get_player ()) false  
   end
 

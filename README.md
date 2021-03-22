@@ -24,6 +24,8 @@ Université Paris-Saclay 2021
 
 # Lancement du jeu
 `firefox index.html`
+* Attention sous firefox il faut cliquer sur le joueur pour obtenir le focus
+sinon il est impossible de le bouger !
 
 # Architecture du projet
 

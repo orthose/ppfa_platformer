@@ -6,8 +6,9 @@ let update dt el =
   (* Combien de temps depuis la dernière update ? *)
   let delta = min (dt -. !last_dt) 16.6 in
   last_dt := dt;
-
-  let g = Vector.{ x = 0.0; y = 0.15 } in
+  
+  (* Gravité attraction vers le bas *)
+  let g = Globals.gravity in
   List.iter (fun e ->
     (*
       Somme des forces = masse * accéleration
@@ -20,7 +21,8 @@ let update dt el =
     let forces = Vector.add forces (Vector.mult mass g) in (* on ajoute la gravité *)
     let forces =
         (* on ajoute les frottements du support *)
-        let f = Vector.mult (mass /. delta) { x= old_v.x *. -0.25 ; y = 0.0 } in
+        let friction = Friction.get e in
+        let f = Vector.mult (mass /. delta) { x= old_v.x *. friction ; y = 0.0 } in
         Vector.add f forces
     in
     let new_v = Vector.add old_v (Vector.mult (delta/. mass) forces) in
