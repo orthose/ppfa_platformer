@@ -1,8 +1,11 @@
 open Ecs
 
 val create : string -> float -> float -> Entity.t
-val reset : Entity.t -> float -> float -> unit
 
-val move_up : Entity.t -> unit
-val move_down : Entity.t -> unit
-val stop : Entity.t -> unit
+val do_move : unit -> unit
+val jump : unit -> unit
+val run_left : unit -> unit
+val run_right : unit -> unit
+val stop_jump : unit -> unit
+val stop_run_left : unit -> unit
+val stop_run_right : unit -> unit

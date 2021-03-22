@@ -39,6 +39,8 @@ let compute_collision e1 e2 pos1 pos2 =
     Position.set e1 (Point (Vector.add pos1 delta_pos1));
     (* On considère statique l'entité e2 *)
     (*Position.set e2 (Vector.add pos2 delta_pos2);*)
+    if Resting.has_component e1 then Resting.set e1 (n == c);
+    if Resting.has_component e2 then Resting.set e2 (n == c);
   
     (* [5] On normalise n (on calcule un vecteur de même direction mais de norme 1) *)
     let n = Vector.normalize n in
@@ -49,7 +51,7 @@ let compute_collision e1 e2 pos1 pos2 =
     (* Elasticité fixe. En pratique, l'elasticité peut être stockée dans
     les objets comme un composant : 1 pour la balle et les murs, 0.5 pour
     des obstacles absorbants, 1.2 pour des obstacles rebondissant, … *)
-    let e = 1.0 in
+    let e = 0.0 in
   
     (* normalisation des masses *)
     let m1 = Mass.get e1 in
