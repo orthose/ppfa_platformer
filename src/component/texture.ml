@@ -4,13 +4,20 @@ type animation = {
 }
 
 type t = Color of Gfx.color
-  | Image of Gfx. render
+  | Image of Gfx.render
   | Animation of animation
 
 let black = Color (Gfx.color 0 0 0 255)
 let red = Color (Gfx.color 255 0 0 255)
 let blue = Color (Gfx.color 0 0 255 255)
+let green = Color (Gfx.color 0 255 0 255)
+let yellow = Color (Gfx.color 255 255 0 255)
 let gray = Color (Gfx.color 128 128 128 255)
+
+let select_color c =
+  match c with
+  | Color(x) -> x
+  | _ -> failwith "Invalid color"
 
 let create_image img width height = 
   let render = Gfx.create_offscreen width height in

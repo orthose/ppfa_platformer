@@ -20,15 +20,16 @@ let chain_functions f_list =
       end
 
 let test_level : Level.level = 
-  Array.make_matrix 19 25 Empty
+  Array.make_matrix 10 13 Empty
 let () =
-  for i = 0 to (25 - 1) do
-    test_level.(19 - 1).(i) <- Ground
+  for i = 0 to (13 - 1) do
+    test_level.(10 - 2).(i) <- Ground;
+    test_level.(10 - 1).(i) <- Ground
   done
   
 let ground = Ground.create "ground" test_level
 
-let player = Player.create "mario" 0. (32. *. 16.)
+let player = Player.create "mario" 0. (64. *. 6.)
 
 let init_game _dt = 
   Input_handler.register_command (KeyDown "z") (Player.jump);

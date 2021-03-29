@@ -20,6 +20,11 @@ let create name x y =
   Surface.set e Texture.black;
   SumForces.set e Vector.zero;
   Resting.set e Entity.dummy;
+  CollisionResolver. set e (fun _ e2 ->
+    (* Le joueur est touché par un ennemi *)
+    if Enemy.has_component e2 then
+      Game_state.decr_life ();
+    );
 
   (* systems *)
   Collision_S.register e;

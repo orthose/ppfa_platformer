@@ -82,7 +82,7 @@ let compute_collision e1 e2 pos1 pos2 =
     (*Velocity.set e2 new_v2;*)
     (* [10] appel des resolveurs *)
     if CollisionResolver.has_component e1 then (CollisionResolver.get e1) e1 e2;
-    if CollisionResolver.has_component e2 then (CollisionResolver.get e2) e2 e1
+    (*if CollisionResolver.has_component e2 then (CollisionResolver.get e2) e2 e1*)
   end
 
 let update _dt el =
@@ -117,4 +117,7 @@ let update _dt el =
               e1 e2
               pos1 pos2
               ) lpos
-    ) el) [(Game_state.get_player ())]
+    ) el) (
+      (Game_state.get_player ()) 
+      :: (List.map (fun  (x, _) -> x) (Enemy.members ()))
+      )

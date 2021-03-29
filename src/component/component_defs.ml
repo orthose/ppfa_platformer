@@ -14,4 +14,5 @@ module Resting = Component.Make(struct type t = Entity.t let name = "nobounce" e
 module SumForces = Component.Make(struct type t = Vector.t let name = "forces" end)
 module Friction = Component.Make(struct type t = float let name = "friction" end)
 module Elasticity = Component.Make(struct type t = float let name = "elasticity" end)
-module Enemy = Component.Make(struct type t = Vector.t -> Vector.t let name = "enemy" end)
+module Enemy = Component.Make(struct type t = Entity.t let name = "enemy" end)
+module MovablePlatform = Component.Make(struct type t = Entity.t let name = "movableplatform" end)
