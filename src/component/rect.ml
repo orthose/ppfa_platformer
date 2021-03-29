@@ -6,8 +6,7 @@ let top_right v b = { v with x = v.x +. float b.width }
 let bottom_left v b = { v with y = v.y +. float b.height }
 
 let bottom_right v b = { x = v.x +. float b.width;
-                         y = v.y +. float b.height;
-                       }
+                         y = v.y +. float b.height; }
 
 let center v b = { 
   x = v.x +. 0.5 *. float b.width;

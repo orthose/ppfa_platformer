@@ -1,10 +1,14 @@
 (* Les différents types de plateforme *)
+type enemy =
+  | Goomba
+
 type t =
   | Empty
   | Ground
+  | Enemy of enemy
 
 (* Matrice des plateformes *)
-type level = t array array
+type level = t array array 
 
 let filter token =
   Array.map (fun a ->
@@ -14,7 +18,7 @@ let filter token =
     ) a
   )
   
-let filter_to_listbox platform level =
+let filter_to_listpos platform level =
   let (w, h) = (Globals.unit_box.width, Globals.unit_box.height) in
   ! (fst (
     Array.fold_left (fun acc1 a ->
@@ -35,4 +39,4 @@ let filter_to_listbox platform level =
       ) 0 a 
     in
     (fst acc1, snd acc1 + 1)
-  ) (ref [], 0) level))  
+  ) (ref [], 0) level))

@@ -25,13 +25,21 @@ let () =
   for i = 0 to (13 - 1) do
     test_level.(10 - 2).(i) <- Ground;
     test_level.(10 - 1).(i) <- Ground
-  done
+  done;
+  test_level.(7).(2) <- Ground;
+  test_level.(7).(12) <- Ground;
+  test_level.(7).(5) <- Enemy Goomba
+  
+(*let test_level = Level_parser.parse "/static/files/level.txt"*)
   
 let ground = Ground.create "ground" test_level
 
 let player = Player.create "mario" 0. (64. *. 6.)
 
+let goomba = Goomba.create test_level 
+
 let init_game _dt = 
+
   Input_handler.register_command (KeyDown "z") (Player.jump);
   Input_handler.register_command (KeyUp "z") (Player.stop_jump);
   Input_handler.register_command (KeyDown "q") (Player.run_left);
@@ -39,13 +47,13 @@ let init_game _dt =
   Input_handler.register_command (KeyDown "d") (Player.run_right);
   Input_handler.register_command (KeyUp "d") (Player.stop_run_right);
   
+  Random.self_init ();
   System.init_all ();
   Game_state.init player;
   false
 
 let play_game dt =
   Player.do_move ();
-  Enemy.do_move ();
   System.update_all dt;
   (* One player reach 10 points *)
   (*Game_state.get_score1 () < 10 && Game_state.get_score2 () < 10*)

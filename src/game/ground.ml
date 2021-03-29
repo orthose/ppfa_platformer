@@ -10,7 +10,7 @@ let create name level =
   Platform.set e Ground;
   Box.set e Globals.unit_box;
   Position.set e (MultiPoint 
-    (Level.filter_to_listbox Ground level));
+    (Level.filter_to_listpos Ground level));
   Velocity.set e Vector.zero;
   Mass.set e infinity;
   Name.set e name;

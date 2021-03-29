@@ -23,10 +23,10 @@ let incr_score () =
   !state.score <- !state.score + 1
   
 let incr_life () =
-  !state.score <- !state.life + 1
+  !state.life <- !state.life + 1
   
 let decr_life () =
-  !state.score <- !state.life - 1
+  !state.life <- !state.life - 1
   
 let init e =
   state := {!state with player = e}

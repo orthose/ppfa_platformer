@@ -11,3 +11,12 @@ let pp fmt a = Format.fprintf fmt "(%f, %f)" a.x a.y
 
 let zero = { x = 0.0; y = 0.0 }
 let is_zero v = v.x = 0.0 && v.y = 0.0
+let random_x () = { 
+  x = 
+    (let r = Random.float 1.0 in
+    if Random.bool () then r
+    else (-. r));
+    y = 0.0 }
+let random_y () = 
+  let r = random_x () in
+  { x = 0.0; y = r.x }

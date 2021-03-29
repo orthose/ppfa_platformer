@@ -25,7 +25,9 @@ let update dt el =
         (* on ajoute les frottements du support *)
         let platform = Resting.get e in
         let friction =
-          if platform = Entity.dummy then Globals.friction
+          (* Les ennemis ne subissent pas la friction *)
+          if Enemy.has_component e then 0.0
+          else if platform = Entity.dummy then Globals.friction
           else Friction.get platform
         in
         let f = Vector.mult (mass /. delta) { x= old_v.x *. friction ; y = 0.0 } in

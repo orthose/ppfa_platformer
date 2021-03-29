@@ -6,6 +6,7 @@ let canvas_height = 600
 let unit_box = Rect.{width = 64; height = 64}
 
 let player_box = Rect.{width = 32; height = 64}
+let enemy_box = Rect.{width = 64; height = 64}
 
 (* Constantes du moteur physique *)
 let gravity = Vector.{ x = 0.0; y = 0.001 }

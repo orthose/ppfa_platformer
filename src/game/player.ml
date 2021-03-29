@@ -27,7 +27,9 @@ let create name x y =
     );
 
   (* systems *)
-  Collision_S.register e;
+  (* Le joueur est enregistré manuellement
+  au système de collision *)
+  (*Collision_S.register e;*)
   Control_S.register e;
   Draw_S.register e;
   Move_S.register e;

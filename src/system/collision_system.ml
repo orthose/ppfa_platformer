@@ -98,7 +98,7 @@ let update _dt el =
         let pos1 =
           match Position.get e1 with
           | Point pos -> pos
-          | _ -> failwith "Basic entity hasn't simple position"
+          | _ -> failwith "Basic entity has only simple position"
         in
         
         (* Le système de collision doit faire la différence
@@ -110,7 +110,7 @@ let update _dt el =
             e1 e2
             pos1 pos2
         | MultiPoint lpos ->
-            (* Améliorer en ne regardant que les objets proches 
+            (* TODO: Améliorer en ne regardant que les objets proches 
             de e1 et dans l'écran *)
             List.iter (fun pos2 ->
               compute_collision
@@ -119,5 +119,5 @@ let update _dt el =
               ) lpos
     ) el) (
       (Game_state.get_player ()) 
-      :: (List.map (fun  (x, _) -> x) (Enemy.members ()))
+      :: (List.map (fun (x, _) -> x) (Enemy.members ()))
       )
