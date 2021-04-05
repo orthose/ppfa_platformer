@@ -19,7 +19,7 @@ let chain_functions f_list =
         true
       end
 
-let test_level : Level.level = 
+(*let test_level : Level.level = 
   Array.make_matrix 10 13 Empty
 let () =
   for i = 0 to (13 - 1) do
@@ -28,15 +28,15 @@ let () =
   done;
   test_level.(7).(2) <- Ground;
   test_level.(7).(12) <- Ground;
-  test_level.(7).(5) <- Enemy Goomba
+  test_level.(7).(5) <- Enemy Goomba*)
   
-(*let test_level = Level_parser.parse "/static/files/level.txt"*)
+let test_level = Level_parser.parse "/static/files/level1.txt"
   
 let ground = Ground.create "ground" test_level
 
-let player = Player.create "mario" 0. (64. *. 6.)
-
 let goomba = Goomba.create test_level 
+
+let player = Player.create "mario" 0. (64. *. 6.) 
 
 let init_game _dt = 
 

@@ -37,6 +37,11 @@ let parse level_file =
   in
   let (lol, h) = list_of_lines ([first], 1) in
   
+  (* Initialisation des varibles de Level *)
+  Level.width_max := (float)w *. (float)Globals.unit_box.width;
+  Level.height_max := (float)h *. (float)Globals.unit_box.height;
+  
+  (* Création de la matrice du niveau *)
   let res = Array.make_matrix h w Empty in
   
   (* Remplissage de la matrice *)

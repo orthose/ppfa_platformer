@@ -10,6 +10,10 @@ type t =
 (* Matrice des plateformes *)
 type level = t array array 
 
+(* Variables initialisées dans Level_parser *)
+let width_max = ref 0.0
+let height_max = ref 0.0
+
 let filter token =
   Array.map (fun a ->
     Array.map (fun el ->

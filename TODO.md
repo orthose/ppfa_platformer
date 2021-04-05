@@ -13,17 +13,18 @@ squelette fourni.
     à tester le code ajouté
     + **DONE**: Supprimer le code en rapport avec le pong
 * **DONE**: Créer le personnage et définir ses contrôles.
-* **TODO**: Scrolling horizontal de gauche à droite avec personnage fixe.
+* **DONE**: Scrolling horizontal de gauche à droite avec personnage fixe.
 * **TODO**: Créer un premier niveau simple et le tester
 * **TODO**: Paramétrer correctement le fichier Globals
 * **TODO**: Définition des fonctions de création des entités dans le main.
-    + Personnage / Ennemis
+    + **DONE** Personnage / Ennemis
     + Arrière-plan / Bordures
     + Plateformes / Sol
-    + Score
+    + **DONE** Score
     + User interface
     + Obstacles
     + Bonus / Malus  
 * **DONE**: Réaliser un parser de niveaux.
-* **TODO**: Réaliser un launcher de niveau.
+* **TODO**: Réaliser l'enchaînement des niveaux.
+* **TODO**: Faire respawn le joueur en début de niveau en cas de mort.
 * **TODO**: Améliorer les textures.

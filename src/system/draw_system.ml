@@ -64,9 +64,15 @@ let update _dt el =
     (* Faire décalage avec caméra pour le scroll *) 
     match Position.get e with
     | Point pos ->
-        draw ctx e pos.x pos.y 
+        let scroll_pos = 
+          Camera.scrolling pos
+        in
+        draw ctx e scroll_pos.x scroll_pos.y 
     | MultiPoint lpos ->
         List.iter (fun pos ->
-          draw ctx e pos.x pos.y 
+          let scroll_pos = 
+            Camera.scrolling pos
+          in
+          draw ctx e scroll_pos.x scroll_pos.y 
           ) lpos
   ) el
