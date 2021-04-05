@@ -3,7 +3,7 @@ open System_defs
 open Level
 open Ecs
 
-let create name enemy velocity box texture mass life gravity level =
+let create name enemy velocity box texture mass life gravity move level =
   (* Parcours de tous les ennemis du niveau *)
   List.fold_left (fun acc Vector.{x = x; y = y} ->
     let e = Entity.create () in
@@ -19,15 +19,17 @@ let create name enemy velocity box texture mass life gravity level =
     Surface.set e texture;
     Resting.set e Entity.dummy;
     Life.set e life;
-    CollisionResolver. set e (fun _ _ ->
+    Ai.set e (move Vector.{x = x; y = y} e);
+    (*CollisionResolver. set e (fun _ _ ->
       (* Changement de direction *)
       Velocity.set e (Vector.mult (-. 1.) (Velocity.get e))
-      );
+      );*)
       
     (* systems *)
     Collision_S.register e;
     Draw_S.register e;
     Move_S.register e;
+    Autopilot_S.register e;
     
     (* L'ennemi est-il soumis à la gravité ? *)
     if gravity then

@@ -16,4 +16,5 @@ module Friction = Component.Make(struct type t = float let name = "friction" end
 module Elasticity = Component.Make(struct type t = float let name = "elasticity" end)
 module Life = Component.Make(struct type t = int let name = "life" end)
 module Enemy = Component.Make(struct include Level let name = "enemy" end)
+module Ai = Component.Make(struct type t = unit -> unit let name = "ai" end)
 (*module MovablePlatform = Component.Make(struct type t = Entity.t let name = "movableplatform" end)*)
