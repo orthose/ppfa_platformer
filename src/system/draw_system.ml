@@ -25,7 +25,7 @@ let draw ctx e x y =
       box.height
   | Animation(animation) ->
     let v = Velocity.get e in
-    let render = Texture.get_frame animation (int_of_float v.x) in
+    let render = Texture.get_frame animation v.x in
     Gfx.blit_scale ctx render
       (int_of_float x)
       (int_of_float y)

@@ -1,7 +1,17 @@
 open Ecs
 
+type player_sprite = {
+  sprite : string;
+  num_w : int;
+  num_h : int;
+  sw : int;
+  sh : int
+}
+
 val create : string -> float -> float -> Entity.t
 
+val sprites : player_sprite array
+val set_sprite : int -> unit
 val do_move : unit -> unit
 val jump : unit -> unit
 val run_left : unit -> unit

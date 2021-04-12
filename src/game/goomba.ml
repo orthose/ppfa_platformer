@@ -21,10 +21,13 @@ let create =
         else -1.0
     in
     let f = SumForces.get e in
-    let new_f = Vector.add f { x = 0.05 *. dir; y = 0.0 } in
+    let new_f = Vector.add f { x = 0.02 *. dir; y = 0.0 } in
     SumForces.set e new_f
   in
-  let box = Globals.unit_box in 
+  let box = Rect.{
+    width = Globals.unit_box.width / 2; 
+    height = Globals.unit_box.height / 2 } 
+  in 
   Abstract_enemy.create
   "goomba" Goomba Vector.zero
   box (Texture.gray) 10. 10 true move 

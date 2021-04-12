@@ -1,6 +1,6 @@
 type animation = {
   frames : Gfx.render array;
-  mutable current : int
+  mutable current : float
 }
 
 type t = Color of Gfx.color
@@ -40,17 +40,18 @@ let create_animation img num_w num_h sw sh dw dh =
     else ()
   in
   let () = fill 0 0 in
-  Animation ({frames=frames; current=0})
+  Animation ({frames=frames; current=0.})
   
 let get_frame anim dir =
-  let res = anim.frames.(anim.current) in
-  let signe = 
-    if dir == 0 then 0 
-    else (abs dir) / dir
-  in
+  let res = anim.frames.(int_of_float anim.current) in
+  (*let signe = 
+    if dir == 0. then 0 
+    else int_of_float ((abs_float dir) /. dir)
+  in*)
   let length = Array.length anim.frames in
-  let new_index = anim.current + signe in
-  let borne n x = (n + x) mod n in
+  (*let new_index = anim.current + signe in*)
+  let new_index = anim.current +. dir in
+  let borne n x = mod_float (n +. x) n in
   (*let () = 
     if new_index < 0 then 
       anim.current <- length - 1
@@ -58,7 +59,10 @@ let get_frame anim dir =
       anim.current <- 0
     else anim.current <- new_index
   in*)
-  anim.current <- borne length new_index;
+  (*anim.current <- borne length new_index;*)
+  anim.current <- borne (float_of_int length) new_index;
+  (*Gfx.debug (Printf.sprintf "(signe=%d)" signe);*)
+  (*Gfx.debug (Printf.sprintf "(current=%f)" anim.current);*)
   res
           
           
