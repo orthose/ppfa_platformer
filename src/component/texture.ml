@@ -1,6 +1,6 @@
 type animation = {
   frames : Gfx.render array;
-  mutable current : float
+  mutable current : int
 }
 
 type t = Color of Gfx.color
@@ -40,30 +40,27 @@ let create_animation img num_w num_h sw sh dw dh =
     else ()
   in
   let () = fill 0 0 in
-  Animation ({frames=frames; current=0.})
+  Animation ({frames=frames; current=0})
   
-let get_frame anim dir =
-  let res = anim.frames.(int_of_float anim.current) in
-  (*let signe = 
-    if dir == 0. then 0 
-    else int_of_float ((abs_float dir) /. dir)
-  in*)
+let dt_frame = ref 0.0
+  
+let get_frame dt anim dir =
+  let res = anim.frames.(anim.current) in
   let length = Array.length anim.frames in
-  (*let new_index = anim.current + signe in*)
-  let new_index = anim.current +. dir in
-  let borne n x = mod_float (n +. x) n in
-  (*let () = 
-    if new_index < 0 then 
-      anim.current <- length - 1
-    else if length <= new_index then
-      anim.current <- 0
-    else anim.current <- new_index
-  in*)
-  (*anim.current <- borne length new_index;*)
-  anim.current <- borne (float_of_int length) new_index;
-  (*Gfx.debug (Printf.sprintf "(signe=%d)" signe);*)
-  (*Gfx.debug (Printf.sprintf "(current=%f)" anim.current);*)
+  let borne n x = (n + x) mod n in
+  (* Permet de ne pas avoir une animation trop rapide *)
+  if dt -. !dt_frame >= 25. then 
+  begin
+    dt_frame := dt;
+    (* On incrémente la frame que si l'objet bouge *)
+    let new_index = anim.current + (
+      (* On ne prend pas en compte les négatifs *)
+      if abs_float dir > 0.0 then 1 else 0
+      ) in
+    anim.current <- borne length new_index
+  end;
   res
+  
           
           
           

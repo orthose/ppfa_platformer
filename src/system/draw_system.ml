@@ -7,7 +7,7 @@ let init () =
   let _, c = Gfx.create "game_canvas:800x600:"  in
   ctx := Some c
 
-let draw ctx e x y =
+let draw dt ctx e x y =
   let box = Box.get e in 
   match Surface.get e with
   | Color(color) -> 
@@ -25,14 +25,14 @@ let draw ctx e x y =
       box.height
   | Animation(animation) ->
     let v = Velocity.get e in
-    let render = Texture.get_frame animation v.x in
+    let render = Texture.get_frame dt animation v.x in
     Gfx.blit_scale ctx render
       (int_of_float x)
       (int_of_float y)
       box.width
       box.height
 
-let update _dt el =
+let update dt el =
   let ctx = Option.get !ctx in
   Gfx.clear_rect ctx 0 0 800 600;
   
@@ -67,12 +67,12 @@ let update _dt el =
         let scroll_pos = 
           Camera.scrolling pos
         in
-        draw ctx e scroll_pos.x scroll_pos.y 
+        draw dt ctx e scroll_pos.x scroll_pos.y 
     | MultiPoint lpos ->
         List.iter (fun pos ->
           let scroll_pos = 
             Camera.scrolling pos
           in
-          draw ctx e scroll_pos.x scroll_pos.y 
+          draw dt ctx e scroll_pos.x scroll_pos.y 
           ) lpos
   ) el
