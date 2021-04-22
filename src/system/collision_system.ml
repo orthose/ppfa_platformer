@@ -6,7 +6,7 @@ let init () = ()
 (* les composants du rectangle r1 et r2 sont pos1 box1 pos2 box2 *)
 (* e1 = entité déplaçable player ou ennemy *)
 (* e2 = plateforme statique avec elastacité *)
-let compute_collision e1 e2 pos1 pos2 =
+let compute_collision dt e1 e2 pos1 pos2 =
   (* les box *)
   let box1 = Box.get e1 in
   let box2 = Box.get e2 in
@@ -81,11 +81,11 @@ let compute_collision e1 e2 pos1 pos2 =
     (* Simplification: Inutile car e2 est censée rester immobile *)
     (*Velocity.set e2 new_v2;*)
     (* [10] appel des resolveurs *)
-    if CollisionResolver.has_component e1 then (CollisionResolver.get e1) e1 e2;
+    if CollisionResolver.has_component e1 then (CollisionResolver.get e1) dt e1 e2;
     (*if CollisionResolver.has_component e2 then (CollisionResolver.get e2) e2 e1*)
   end
 
-let update _dt el =
+let update dt el =
   List.iter (fun e1 ->
     List.iter (fun e2 ->
       (* Une double boucle qui évite de comparer deux fois
@@ -106,14 +106,14 @@ let update _dt el =
         parser de niveau *)
         match Position.get e2 with
         | Point pos2 ->
-            compute_collision
+            compute_collision dt
             e1 e2
             pos1 pos2
         | MultiPoint lpos ->
             (* TODO: Améliorer en ne regardant que les objets proches 
             de e1 et dans l'écran *)
             List.iter (fun pos2 ->
-              compute_collision
+              compute_collision dt
               e1 e2
               pos1 pos2
               ) lpos

@@ -81,10 +81,15 @@ let create name x y =
   Name.set e name;
   SumForces.set e Vector.zero;
   Resting.set e Entity.dummy;
-  CollisionResolver. set e (fun _ e2 ->
+  CollisionResolver. set e (fun dt _ e2 ->
     (* Le joueur est touché par un ennemi *)
-    if Enemy.has_component e2 then
-      Game_state.decr_life ();
+    if Enemy.has_component e2  
+    && dt -. (Game_state.get_dt_hit ()) > Globals.immortal_time then (
+      (* On démarre le temprs d'invincibilité *)
+      Game_state.set_dt_hit dt;
+      (* On fait diminuer la vie *)
+      Game_state.decr_life ()
+      );
     (* Sprite de repos après un saut *)
     if (not action.jump) 
     && (not action.move_right) 

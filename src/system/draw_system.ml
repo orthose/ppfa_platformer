@@ -55,7 +55,9 @@ let update dt el =
     "30px Arial"
   ) - 5) 25 "30px Arial" (
     (* Changement de couleur du score *)
-    if life > 5 then select_color green
+    if (dt -. (Game_state.get_dt_hit ())) <= Globals.immortal_time then
+      select_color blue
+    else if life > 5 then select_color green
     else if life > 1 then select_color yellow
     else select_color red
     );

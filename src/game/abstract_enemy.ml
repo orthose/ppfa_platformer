@@ -20,10 +20,6 @@ let create name enemy velocity box texture mass life gravity move level =
     Resting.set e Entity.dummy;
     Life.set e life;
     Ai.set e (move Vector.{x = x; y = y} e);
-    (*CollisionResolver. set e (fun _ _ ->
-      (* Changement de direction *)
-      Velocity.set e (Vector.mult (-. 1.) (Velocity.get e))
-      );*)
       
     (* systems *)
     Collision_S.register e;
