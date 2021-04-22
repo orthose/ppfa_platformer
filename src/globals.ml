@@ -3,7 +3,7 @@ let canvas_width = 800
 let canvas_height = 600
 
 (* Unité d'échantillonnage de la matrice de niveau *)
-let unit_box = Rect.{width = 64; height = 64}
+let unit_box = Rect.{width = 32; height = 32}
 let player_box = Rect.{width = 32; height = 64}
 
 (* Constantes du moteur physique *)

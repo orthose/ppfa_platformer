@@ -14,7 +14,12 @@ let create name level =
   Velocity.set e Vector.zero;
   Mass.set e infinity;
   Name.set e name;
-  Surface.set e Texture.red;
+  Surface.set e (Texture.create_image
+    (Graphics.get_image 
+      "resources/images/ground.png")
+    Globals.unit_box.Rect.width
+    Globals.unit_box.Rect.height
+    );
   Elasticity.set e 0.0;
   Friction.set e (-0.25);
 

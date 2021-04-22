@@ -9,8 +9,8 @@ let create level =
         "resources/images/goomba-left.png")
       8 2
       121 99
-      (Globals.unit_box.width / 2)
-      (Globals.unit_box.height / 2) 
+      (Globals.unit_box.width)
+      (Globals.unit_box.height) 
   in
 let sprite_right =
   Texture.create_animation
@@ -18,8 +18,8 @@ let sprite_right =
       "resources/images/goomba-right.png")
     8 2
     121 99
-    (Globals.unit_box.width / 2)
-    (Globals.unit_box.height / 2) 
+    (Globals.unit_box.width)
+    (Globals.unit_box.height) 
   in
   
   (* Fonction de déplacement automatique *)
@@ -53,8 +53,8 @@ let sprite_right =
   in
   
   let box = Rect.{
-    width = Globals.unit_box.width / 2; 
-    height = Globals.unit_box.height / 2 } 
+    width = Globals.unit_box.width; 
+    height = Globals.unit_box.height } 
   in 
   (* Appel de la fonction de création d'ennemi *)
   Abstract_enemy.create
