@@ -1,6 +1,7 @@
 type animation = {
   frames : Gfx.render array;
-  mutable current : int
+  mutable current : int;
+  mutable dt : float;
 }
 
 type t = Color of Gfx.color
@@ -40,18 +41,16 @@ let create_animation img num_w num_h sw sh dw dh =
     else ()
   in
   let () = fill 0 0 in
-  Animation ({frames=frames; current=0})
-  
-let dt_frame = ref 0.0
+  Animation ({frames=frames; current=0; dt = 0.})
   
 let get_frame dt anim dir =
   let res = anim.frames.(anim.current) in
   let length = Array.length anim.frames in
   let borne n x = (n + x) mod n in
   (* Permet de ne pas avoir une animation trop rapide *)
-  if dt -. !dt_frame >= 25. then 
+  if dt -. anim.dt >= 25. then 
   begin
-    dt_frame := dt;
+    anim.dt <- dt;
     (* On incrémente la frame que si l'objet bouge *)
     let new_index = anim.current + (
       (* On ne prend pas en compte les négatifs *)

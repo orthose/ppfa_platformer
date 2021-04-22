@@ -15,10 +15,14 @@ let chain_functions f_list =
 (* Chargement des textures *)
 (* ATTENTION: Ne pas mettre dans init_game *)
 let () = 
+  let path = "resources/images/" in
   Array.iter (fun s ->
-    let sprite_player = "resources/images/"^(s.Player.sprite) in
+    let sprite_player = path^(s.Player.sprite) in
     Graphics.load_image sprite_player
-    ) Player.sprites
+    ) Player.sprites;
+  Graphics.load_image (path^"goomba-left.png");
+  Graphics.load_image (path^"goomba-right.png")
+  
 
 let init_game _dt = 
 
