@@ -8,7 +8,7 @@ let create level =
       (Graphics.get_image 
         "resources/images/goomba-left.png")
       8 2
-      121 100
+      121 99
       (Globals.unit_box.width / 2)
       (Globals.unit_box.height / 2) 
   in
@@ -17,7 +17,7 @@ let sprite_right =
     (Graphics.get_image 
       "resources/images/goomba-right.png")
     8 2
-    121 100
+    121 99
     (Globals.unit_box.width / 2)
     (Globals.unit_box.height / 2) 
   in

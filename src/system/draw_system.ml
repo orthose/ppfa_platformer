@@ -48,7 +48,11 @@ let update dt el =
     
   (* Affichage de la vie *)
   let life = Game_state.get_life () in
-  let s = string_of_int life in
+  (* Création du nombre de coeurs sous forme string *)
+  let s = String.concat "" (List.init (
+    (* Pour éviter erreur *)
+    if life > 0 then life else 0
+    ) (fun _ -> "❤")) in
   Gfx.draw_text ctx s
   (800 - (
     Gfx.measure_text ctx s
@@ -58,7 +62,7 @@ let update dt el =
     if (dt -. (Game_state.get_dt_hit ())) <= Globals.immortal_time then
       select_color blue
     else if life > 5 then select_color green
-    else if life > 1 then select_color yellow
+    else if life > 2 then select_color yellow
     else select_color red
     );
     
