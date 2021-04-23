@@ -5,6 +5,7 @@ type enemy =
 type t =
   | Empty
   | Ground
+  | Ice
   | Spike
   | Enemy of enemy
 

@@ -4,6 +4,7 @@ open Level
 let link = function
   | '-' -> Empty
   | '*' -> Ground
+  | '~' -> Ice
   | '#' -> Spike
   | 'g' -> Enemy Goomba
   | _ -> failwith "Unknown token"
