@@ -5,6 +5,7 @@ type enemy =
 type t =
   | Empty
   | Ground
+  | Spike
   | Enemy of enemy
 
 (* Matrice des plateformes *)

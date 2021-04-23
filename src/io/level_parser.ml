@@ -4,7 +4,8 @@ open Level
 let link = function
   | '-' -> Empty
   | '*' -> Ground
-  | 'o' -> Enemy Goomba
+  | '#' -> Spike
+  | 'g' -> Enemy Goomba
   | _ -> failwith "Unknown token"
 
 let parse level_file =

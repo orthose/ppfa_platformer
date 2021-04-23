@@ -72,7 +72,7 @@ let set_sprite i =
     Globals.player_box.height
     )
 
-let create name x y =
+let create name x y espike =
   let e = Entity.create () in
   Position.set e (Point { x = x; y = y});
   Velocity.set e Vector.zero;
@@ -85,8 +85,14 @@ let create name x y =
     (* Le joueur est touché par un ennemi *)
     if Enemy.has_component e2  
     && dt -. (Game_state.get_dt_hit ()) > Globals.immortal_time then (
-      (* On démarre le temprs d'invincibilité *)
+      (* On démarre le temps d'invincibilité *)
       Game_state.set_dt_hit dt;
+      (* On fait diminuer la vie *)
+      Game_state.decr_life ()
+      )
+    (* Le joueur touche une plateforme piquante 
+    Il meurt instantanément ! *)
+    else if e2 = espike then (
       (* On fait diminuer la vie *)
       Game_state.decr_life ()
       );

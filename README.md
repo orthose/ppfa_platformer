@@ -22,6 +22,9 @@ est toujours plus intéressant en équipe.
 `dune build`
 
 # Nettoyage de _build
+* Il est nécessaire de nettoyer avant de compiler le projet
+pour prendre en compte les modifications des fichiers de niveau
+resources/files/level*.txt
 `dune clean`
 
 # Lancement du jeu
@@ -31,6 +34,5 @@ est toujours plus intéressant en équipe.
 que vous disposez d'un clavier azerty).
 
 # Architecture du projet
-
 * Le fichier TODO.md contient toutes les tâches en cours
 et effectuées. Cela donne un aperçu de l'avancement du projet.

@@ -19,6 +19,7 @@ let () =
     "goomba-left.png";
     "goomba-right.png";
     "ground.png";
+    "spike.png";
     "bg-hill.png"
     ] in
   let path = "resources/images/" in
@@ -38,12 +39,13 @@ let init_game _dt =
   
   (* Création des plateformes *)
   let _ground = Ground.create "ground" level in
+  let spike = Spike.create "spike" level in
   
   (* Création des ennemis *)
   let _goomba = Goomba.create level in
   
   (* Création du joueur *)
-  let player = Player.create "mario" 0. (64. *. 6.) in
+  let player = Player.create "mario" 0. (64. *. 6.) spike in
   Game_state.init player;
   Player.set_sprite 0;
   
