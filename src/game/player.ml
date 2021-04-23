@@ -83,7 +83,7 @@ let create name x y espike =
   Resting.set e Entity.dummy;
   CollisionResolver. set e (fun dt _ e2 ->
     (* Le joueur est touché par un ennemi *)
-    if Enemy.has_component e2  
+    if (match ElementGrid.get e2 with Enemy _ -> true | _ -> false)  
     && dt -. (Game_state.get_dt_hit ()) > Globals.immortal_time then (
       (* On démarre le temps d'invincibilité *)
       Game_state.set_dt_hit dt;
@@ -97,7 +97,7 @@ let create name x y espike =
       Game_state.decr_life ()
       )
     (* Récupération d'une pièce *)
-    else if Platform.has_component e2 && Platform.get e2 = Coin then (
+    else if ElementGrid.get e2 = Coin then (
       Game_state.incr_score ();
       Coin.unregister_systems e2
       );

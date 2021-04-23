@@ -9,7 +9,7 @@ let create name enemy velocity box texture mass life gravity move level =
     let e = Entity.create () in
     
     (* Components *)
-    Enemy.set e (Enemy enemy);
+    ElementGrid.set e (Enemy enemy);
     Position.set e (Point {x = x; y = y});
     Velocity.set e velocity;
     Mass.set e mass;

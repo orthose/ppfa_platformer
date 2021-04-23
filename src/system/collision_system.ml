@@ -119,5 +119,9 @@ let update dt el =
               ) lpos
     ) el) (
       (Game_state.get_player ()) 
-      :: (List.map (fun (x, _) -> x) (Enemy.members ()))
+      :: (List.filter_map (fun (e, v) -> 
+            match v with
+            | Level.Enemy _ -> Some e
+            | _ -> None
+            ) (ElementGrid.members ()))
       )

@@ -1,4 +1,4 @@
-(* Les différents types de plateforme *)
+(* Les différents types d'éléments de la grille de niveau *)
 type enemy =
   | Goomba
 

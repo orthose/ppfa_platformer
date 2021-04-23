@@ -9,7 +9,7 @@ let create name level =
     let e = Entity.create () in
     
     (* Components *)
-    Platform.set e Coin; 
+    ElementGrid.set e Coin; 
     Position.set e (Point {x = x; y = y});
     (* La pièce ne bouge pas mais nécessaire
     pour l'animation *)

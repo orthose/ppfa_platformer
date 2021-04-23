@@ -7,7 +7,7 @@ let create name level =
   let e = Entity.create () in
   
   (* components *)
-  Platform.set e Spike;
+  ElementGrid.set e Spike;
   Box.set e Globals.unit_box;
   Position.set e (MultiPoint 
     (Level.filter_to_listpos Spike level));
