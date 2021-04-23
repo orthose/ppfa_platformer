@@ -22,6 +22,7 @@ let () =
     "ice.png";
     "mushroom.png";
     "spike.png";
+    "coin.png";
     "bg-hill.png"
     ] in
   let path = "resources/images/" in
@@ -43,6 +44,7 @@ let init_game _dt =
   let _ground = Ground.create "ground" level in
   let _ice = Ice.create "ice" level in
   let _mushroom = Mushroom.create "mushroom" level in
+  let _coin = Coin.create "coin" level in
   let spike = Spike.create "spike" level in
   
   (* Création des ennemis *)

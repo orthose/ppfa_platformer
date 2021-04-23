@@ -95,6 +95,11 @@ let create name x y espike =
     else if e2 = espike then (
       (* On fait diminuer la vie *)
       Game_state.decr_life ()
+      )
+    (* Récupération d'une pièce *)
+    else if Platform.has_component e2 && Platform.get e2 = Coin then (
+      Game_state.incr_score ();
+      Coin.unregister_systems e2
       );
     (* Sprite de repos après un saut *)
     if (not action.jump) 

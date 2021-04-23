@@ -8,6 +8,7 @@ type t =
   | Ice
   | Mushroom
   | Spike
+  | Coin
   | Enemy of enemy
 
 (* Matrice des plateformes *)

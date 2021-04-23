@@ -8,6 +8,7 @@ type t = Color of Gfx.color
   | Image of Gfx.render
   | Animation of animation
 
+let white = Color (Gfx.color 255 255 255 255)
 let black = Color (Gfx.color 0 0 0 255)
 let red = Color (Gfx.color 255 0 0 255)
 let blue = Color (Gfx.color 0 0 255 255)

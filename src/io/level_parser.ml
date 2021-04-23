@@ -7,6 +7,7 @@ let link = function
   | '~' -> Ice
   | '#' -> Mushroom
   | '^' -> Spike
+  | '$' -> Coin 
   | 'g' -> Enemy Goomba
   | _ -> failwith "Unknown token"
 

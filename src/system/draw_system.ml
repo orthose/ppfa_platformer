@@ -56,11 +56,11 @@ let update dt el =
   (* Affichage du score *)
   Gfx.draw_text ctx
   (
-    string_of_int 
+    "🏆 "^string_of_int 
     (Game_state.get_score ())
   ) 
-  (0 + 5) 25 "30px Arial" (
-    select_color black
+  (0 + 5) 35 "35px Arial" (
+    select_color white
     );
     
   (* Affichage de la vie *)
@@ -73,8 +73,8 @@ let update dt el =
   Gfx.draw_text ctx s
   (800 - (
     Gfx.measure_text ctx s
-    "30px Arial"
-  ) - 5) 25 "30px Arial" (
+    "35px Arial"
+  ) - 10) 35 "35px Arial" (
     (* Changement de couleur du score *)
     if (dt -. (Game_state.get_dt_hit ())) <= Globals.immortal_time then
       select_color blue
