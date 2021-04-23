@@ -6,6 +6,7 @@ type t =
   | Empty
   | Ground
   | Ice
+  | Mushroom
   | Spike
   | Enemy of enemy
 

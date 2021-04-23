@@ -20,6 +20,7 @@ let () =
     "goomba-right.png";
     "ground.png";
     "ice.png";
+    "mushroom.png";
     "spike.png";
     "bg-hill.png"
     ] in
@@ -41,6 +42,7 @@ let init_game _dt =
   (* Création des plateformes *)
   let _ground = Ground.create "ground" level in
   let _ice = Ice.create "ice" level in
+  let _mushroom = Mushroom.create "mushroom" level in
   let spike = Spike.create "spike" level in
   
   (* Création des ennemis *)

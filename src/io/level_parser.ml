@@ -5,7 +5,8 @@ let link = function
   | '-' -> Empty
   | '*' -> Ground
   | '~' -> Ice
-  | '#' -> Spike
+  | '#' -> Mushroom
+  | '^' -> Spike
   | 'g' -> Enemy Goomba
   | _ -> failwith "Unknown token"
 
