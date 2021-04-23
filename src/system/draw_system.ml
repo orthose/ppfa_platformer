@@ -35,6 +35,23 @@ let draw dt ctx e x y =
 let update dt el =
   let ctx = Option.get !ctx in
   Gfx.clear_rect ctx 0 0 800 600;
+    
+  List.iter (fun e ->
+    (* Faire décalage avec caméra pour le scroll *) 
+    match Position.get e with
+    | Point pos ->
+        let scroll_pos = 
+          Camera.scrolling pos
+        in
+        draw dt ctx e scroll_pos.x scroll_pos.y 
+    | MultiPoint lpos ->
+        List.iter (fun pos ->
+          let scroll_pos = 
+            Camera.scrolling pos
+          in
+          draw dt ctx e scroll_pos.x scroll_pos.y 
+          ) lpos
+  ) el;
   
   (* Affichage du score *)
   Gfx.draw_text ctx
@@ -65,20 +82,4 @@ let update dt el =
     else if life > 2 then select_color yellow
     else select_color red
     );
-    
-  List.iter (fun e ->
-    (* Faire décalage avec caméra pour le scroll *) 
-    match Position.get e with
-    | Point pos ->
-        let scroll_pos = 
-          Camera.scrolling pos
-        in
-        draw dt ctx e scroll_pos.x scroll_pos.y 
-    | MultiPoint lpos ->
-        List.iter (fun pos ->
-          let scroll_pos = 
-            Camera.scrolling pos
-          in
-          draw dt ctx e scroll_pos.x scroll_pos.y 
-          ) lpos
-  ) el
+  

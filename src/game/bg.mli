@@ -1,3 +1,3 @@
-(*open Ecs
+open Ecs
 
-val create : Gfx.image -> Entity.t*)
+val create : Gfx.image -> Entity.t

@@ -18,7 +18,8 @@ let () =
   let lsprites = [
     "goomba-left.png";
     "goomba-right.png";
-    "ground.png"
+    "ground.png";
+    "bg-hill.png"
     ] in
   let path = "resources/images/" in
   Array.iter (fun s ->
@@ -29,7 +30,7 @@ let () =
     Graphics.load_image (path^s);
     ) lsprites
   
-
+(* ATTENTION: Ordre d'impression inversé *)
 let init_game _dt = 
 
   (* Chargement du niveau *)
@@ -45,6 +46,10 @@ let init_game _dt =
   let player = Player.create "mario" 0. (64. *. 6.) in
   Game_state.init player;
   Player.set_sprite 0;
+  
+  (* Création du background *)
+  let _bg = Bg.create (Graphics.get_image 
+    "resources/images/bg-hill.png") in
   
   (* Contrôles du joueur *)
   Input_handler.register_command (KeyDown "z") (Player.jump);

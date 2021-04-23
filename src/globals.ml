@@ -17,4 +17,4 @@ let right = Vector.{ x = 0.10 ; y = 0.0 }
 let y_scroll = false
 
 (* Temps d'invincibilité *)
-let immortal_time = 3000.
+let immortal_time = 2000.

@@ -1,11 +1,13 @@
 # Introduction
-Projet de PFA (Programmation Fonctionnelle Avancée) L3 INFO S6 Université Paris-Saclay, ayant pour but la création d'un jeu-vidéo de type plateforme.
+Projet de PFA (Programmation Fonctionnelle Avancée) L3 INFO S6 Université Paris-Saclay 2021, ayant pour but la création d'un jeu-vidéo de type plateforme.
 
-# L'équipe des étudiants
+# L'équipe des étudiant(s)
 * Maxime Vincent
-* Clément Pham Van
+* ~~Clément Pham Van~~
 
-Université Paris-Saclay 2021
+Mon coéquipier Clément Pham Van a abandonné ma cause,
+me laissant en monôme ! C'est dommage car un projet
+est toujours plus intéressant en équipe.
 
 # Site du cours
 [Kim Nguyen](https://www.lri.fr/~kn/ppfa_en.html)
@@ -24,8 +26,9 @@ Université Paris-Saclay 2021
 
 # Lancement du jeu
 `firefox index.html`
-* Attention sous firefox il faut cliquer sur le joueur pour obtenir le focus
-sinon il est impossible de le bouger !
+* Attention sous firefox il faut cliquer sur le joueur pour obtenir le focus sinon il est impossible de le bouger !
+* Les touches de contrôle sont les classiques Q, Z, D (en supposant
+que vous disposez d'un clavier azerty).
 
 # Architecture du projet
 
