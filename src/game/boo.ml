@@ -3,7 +3,7 @@ open Component_defs
 let create level =
   
   (* Fonction de déplacement automatique *)
-  let move (init_pos:Vector.t) e () =
+  let move (init_pos:Vector.t) e _dt =
     let pos = 
       match Position.get e with
       | Point(p) -> p

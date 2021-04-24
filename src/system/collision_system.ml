@@ -1,5 +1,6 @@
 open Component_defs
 open Ecs
+open Side 
 
 let init () = ()
 
@@ -20,15 +21,15 @@ let compute_collision dt e1 e2 pos1 pos2 =
     not (Vector.is_zero v1 && Vector.is_zero v2)
   then begin
     (* La friction de la plateforme est transmise au joueur *)
-    Friction.set e1 (Friction.get e2);
+    (*Friction.set e1 (Friction.get e2);*)
     (* [3] le plus petit des vecteurs a b c d *)
     let a = Vector.{ x = s_pos.x; y = 0.0} in
     let b = Vector.{ x = float s_rect.width +. s_pos.x; y = 0.0 } in
     let c = Vector.{ x = 0.0; y = s_pos.y } in
     let d = Vector.{ x = 0.0; y = float s_rect.height +. s_pos.y} in 
-    let n = List.fold_left (fun min_v v ->
-      if Vector.norm v  < Vector.norm min_v then v else min_v) 
-      a [ b; c ; d]
+    let (n, side) = List.fold_left (fun (min_v, s1) (v, s2) ->
+      if Vector.norm v  < Vector.norm min_v then (v, s2) else (min_v, s1)) 
+      (a, Left) [(b, Right); (c, Top); (d, Down)]
     in
     
     (*  [4] rapport des vitesses et déplacement des objets *)
@@ -81,7 +82,7 @@ let compute_collision dt e1 e2 pos1 pos2 =
     (* Simplification: Inutile car e2 est censée rester immobile *)
     (*Velocity.set e2 new_v2;*)
     (* [10] appel des resolveurs *)
-    if CollisionResolver.has_component e1 then (CollisionResolver.get e1) dt e1 e2;
+    if CollisionResolver.has_component e1 then (CollisionResolver.get e1) dt side e1 e2;
     (*if CollisionResolver.has_component e2 then (CollisionResolver.get e2) e2 e1*)
   end
 
@@ -122,6 +123,8 @@ let update dt el =
       :: (List.filter_map (fun (e, v) -> 
             match v with
             | Level.Enemy _ -> Some e
+            | Level.Mushroom -> Some e
+            | Level.Flower -> Some e
             | _ -> None
             ) (ElementGrid.members ()))
       )

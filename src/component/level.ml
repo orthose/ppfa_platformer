@@ -1,14 +1,21 @@
 (* Les différents types d'éléments de la grille de niveau *)
 type enemy =
   | Goomba
+  | Boo
 
 type t =
+  (* Plateformes *)
   | Empty
   | Ground
   | Ice
-  | Mushroom
+  | Toadstool
   | Spike
+  | Mystery of bool
+  (* Items *)
+  | Mushroom
+  | Flower
   | Coin
+  (* Ennemis *)
   | Enemy of enemy
 
 (* Matrice des plateformes *)

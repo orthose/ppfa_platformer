@@ -16,6 +16,9 @@ let create name enemy velocity box texture mass life gravity move level =
     Box.set e box;
     Name.set e name;
     Elasticity.set e 1.0;
+    (* Friction dans le cas où le joueur marche
+    sur l'ennemi *)
+    Friction.set e (-.0.25);
     Surface.set e texture;
     Resting.set e Entity.dummy;
     Life.set e life;
@@ -28,9 +31,10 @@ let create name enemy velocity box texture mass life gravity move level =
     Autopilot_S.register e;
     
     (* L'ennemi est-il soumis à la gravité ? *)
-    if gravity then
+    if gravity then (
       SumForces.set e Vector.zero;
-      Force_S.register e;
+      Force_S.register e
+      );
     
     (* On ajoute à la liste des entités *)
     e :: acc

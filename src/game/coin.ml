@@ -17,7 +17,7 @@ let create name level =
     Mass.set e 0.0;
     Box.set e Globals.unit_box;
     Name.set e name;
-    Elasticity.set e 1.0;
+    Elasticity.set e 0.0;
     Friction.set e (-0.25);
     Surface.set e (Texture.create_animation
       (Graphics.get_image 
@@ -25,7 +25,7 @@ let create name level =
       32 1
       33 34
       Globals.unit_box.width
-      Globals.unit_box.height
+      Globals.unit_box.height 25.
       );
     Resting.set e Entity.dummy;
       

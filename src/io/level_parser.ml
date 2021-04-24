@@ -5,10 +5,12 @@ let link = function
   | '-' -> Empty
   | '*' -> Ground
   | '~' -> Ice
-  | '#' -> Mushroom
+  | '#' -> Toadstool
   | '^' -> Spike
+  | '?' -> Mystery true
   | '$' -> Coin 
   | 'g' -> Enemy Goomba
+  | 'b' -> Enemy Boo
   | _ -> failwith "Unknown token"
 
 let parse level_file =

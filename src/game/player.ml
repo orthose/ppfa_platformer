@@ -1,6 +1,7 @@
 open Component_defs
 open System_defs
 open Ecs
+open Side
 
 type action = { 
   mutable move_left : bool;
@@ -69,10 +70,10 @@ let set_sprite i =
     s.num_w s.num_h
     s.sw s.sh
     Globals.player_box.width
-    Globals.player_box.height
+    Globals.player_box.height 25.
     )
 
-let create name x y espike =
+let create name x y =
   let e = Entity.create () in
   Position.set e (Point { x = x; y = y});
   Velocity.set e Vector.zero;
@@ -81,26 +82,48 @@ let create name x y espike =
   Name.set e name;
   SumForces.set e Vector.zero;
   Resting.set e Entity.dummy;
-  CollisionResolver. set e (fun dt _ e2 ->
+  CollisionResolver. set e (fun dt side _ e2 ->
+    match ElementGrid.get e2 with
     (* Le joueur est touché par un ennemi *)
-    if (match ElementGrid.get e2 with Enemy _ -> true | _ -> false)  
-    && dt -. (Game_state.get_dt_hit ()) > Globals.immortal_time then (
-      (* On démarre le temps d'invincibilité *)
-      Game_state.set_dt_hit dt;
-      (* On fait diminuer la vie *)
-      Game_state.decr_life ()
-      )
+    | Enemy _ ->
+        Game_state.set_form (
+          match Game_state.get_form  () with
+          | Small -> Small
+          | Big -> Small
+          | Fire -> Big
+          );
+        if dt -. (Game_state.get_dt_hit ()) 
+        > Globals.immortal_time then (
+          (* On démarre le temps d'invincibilité *)
+          Game_state.set_dt_hit dt;
+          (* On fait diminuer la vie *)
+          Game_state.decr_life ()
+          )
     (* Le joueur touche une plateforme piquante 
     Il meurt instantanément ! *)
-    else if e2 = espike then (
-      (* On fait diminuer la vie *)
-      Game_state.decr_life ()
-      )
+    | Spike -> 
+        (* On fait diminuer la vie *)
+        Game_state.decr_life ()
     (* Récupération d'une pièce *)
-    else if ElementGrid.get e2 = Coin then (
-      Game_state.incr_score ();
-      Coin.unregister_systems e2
-      );
+    | Coin ->
+        Game_state.incr_score ();
+        Coin.unregister_systems e2
+    (* Activation bloc mystère *)
+    | Mystery true ->
+        if side = Down then Mystery.use dt e2
+    (* Récupération de champigon *)
+    | Mushroom ->
+        Game_state.set_form Big;
+        Game_state.incr_score ();
+        Game_state.reset_life ()
+    (* Récupération de fleur *)
+    | Flower -> 
+        Game_state.set_form Fire;
+        Game_state.incr_score ();
+        Game_state.reset_life ()
+    | _ -> ()
+    ;
+    
     (* Sprite de repos après un saut *)
     if (not action.jump) 
     && (not action.move_right) 

@@ -8,7 +8,7 @@ type player_sprite = {
   sh : int
 }
 
-val create : string -> float -> float -> Entity.t ->Entity.t
+val create : string -> float -> float -> Entity.t
 
 val sprites : player_sprite array
 val set_sprite : int -> unit

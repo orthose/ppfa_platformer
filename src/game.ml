@@ -16,13 +16,10 @@ let chain_functions f_list =
 (* ATTENTION: Ne pas mettre dans init_game *)
 let () =
   let lsprites = [
-    "goomba-left.png";
-    "goomba-right.png";
-    "ground.png";
-    "ice.png";
-    "mushroom.png";
-    "spike.png";
-    "coin.png";
+    "goomba-left.png"; "goomba-right.png"; "boo.png";
+    "ground.png"; "ice.png"; "toadstool.png"; "spike.png";
+    "mystery.png"; "mystery-disabled.png"; 
+    "mushroom.png"; "flower.png"; "coin.png";
     "bg-hill.png"
     ] in
   let path = "resources/images/" in
@@ -43,15 +40,18 @@ let init_game _dt =
   (* Création des plateformes *)
   let _ground = Ground.create "ground" level in
   let _ice = Ice.create "ice" level in
-  let _mushroom = Mushroom.create "mushroom" level in
+  let _toadstool = Toadstool.create "toadstool" level in
   let _coin = Coin.create "coin" level in
-  let spike = Spike.create "spike" level in
+  let _spike = Spike.create "spike" level in
+  let _mystery = Mystery.create "mystery" level in
   
   (* Création des ennemis *)
   let _goomba = Goomba.create level in
+  let _boo = Boo.create level in
   
   (* Création du joueur *)
-  let player = Player.create "mario" 0. (64. *. 6.) spike in
+  let player = Player.create "mario" 0. (
+    (float)Globals.unit_box.height *. 15.) in
   Game_state.init player;
   Player.set_sprite 0;
   

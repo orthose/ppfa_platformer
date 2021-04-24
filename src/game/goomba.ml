@@ -10,7 +10,7 @@ let create level =
       8 2
       121 99
       (Globals.unit_box.width)
-      (Globals.unit_box.height) 
+      (Globals.unit_box.height) 50.
   in
 let sprite_right =
   Texture.create_animation
@@ -19,11 +19,11 @@ let sprite_right =
     8 2
     121 99
     (Globals.unit_box.width)
-    (Globals.unit_box.height) 
+    (Globals.unit_box.height) 50. 
   in
   
   (* Fonction de déplacement automatique *)
-  let move (init_pos:Vector.t) e () =
+  let move (init_pos:Vector.t) e _dt =
     let pos = 
       match Position.get e with
       | Point(p) -> p
@@ -33,6 +33,7 @@ let sprite_right =
     let dir =
       (* Longueur de la distance parcourue par goomba *)
       let size_walk = 200. in
+      (* On va vers la droite *)
       if v.x >= 0.0 then
         (* On repart à gauche *)
         if pos.x > init_pos.x +. size_walk then 

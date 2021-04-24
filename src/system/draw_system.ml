@@ -7,6 +7,14 @@ let init () =
   let _, c = Gfx.create "game_canvas:800x600:"  in
   ctx := Some c
 
+(* Objets dynamiques qui doivent s'afficher
+au premier-plan *)
+let dynamic = ref []
+let add_entity e = 
+  dynamic := e :: !dynamic
+let remove_entity e = 
+  dynamic := List.filter (fun x -> x <> e) !dynamic
+
 let draw dt ctx e x y =
   let box = Box.get e in 
   match Surface.get e with
@@ -25,7 +33,8 @@ let draw dt ctx e x y =
       box.height
   | Animation(animation) ->
     let v = Velocity.get e in
-    let render = Texture.get_frame dt animation v.x in
+    let render = Texture.get_frame dt animation (
+      max (abs_float v.x) (abs_float v.y)) in
     Gfx.blit_scale ctx render
       (int_of_float x)
       (int_of_float y)
@@ -51,7 +60,7 @@ let update dt el =
           in
           draw dt ctx e scroll_pos.x scroll_pos.y 
           ) lpos
-  ) el;
+  ) (el @ !dynamic);
   
   (* Affichage du score *)
   Gfx.draw_text ctx
