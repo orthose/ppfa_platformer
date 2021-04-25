@@ -41,11 +41,34 @@ let create name enemy velocity box texture mass life gravity move level =
      
     ) [] (Level.filter_to_listpos (Enemy enemy) level)
     
-let unregister_systems e gravity =
+let remove e gravity =
     Collision_S.unregister e;
     Draw_S.unregister e;
     Move_S.unregister e;
     Autopilot_S.unregister e;
     if gravity then
-      Force_S.unregister e
+      Force_S.unregister e;
+    (* Pour éviter bogue quand on saute sur l'objet
+    et qu'il disparaît *)
+    let player = Game_state.get_player () in
+    if Resting.get player = e then
+      Resting.set player Entity.dummy;
+    Remove.set e (fun () ->
+      ElementGrid.delete e;
+      Position.delete e;
+      Velocity.delete e;
+      Mass.delete e;
+      Box.delete e;
+      Name.delete e;
+      Elasticity.delete e;
+      Friction.delete e;
+      Surface.delete e;
+      Resting.delete e;
+      Life.delete e;
+      Ai.delete e;
+      if gravity then 
+        SumForces.delete e;
+      Remove_S.unregister e
+    );
+    Remove_S.register e
  

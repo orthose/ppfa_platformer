@@ -14,6 +14,7 @@ module E = struct
   let equal a b = a == b
 
   let compare a b = compare a b
+  
 end
 
 module Table = Hashtbl.Make (E)

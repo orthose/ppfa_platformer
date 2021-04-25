@@ -9,5 +9,6 @@ let init () = ()
 
 let update _dt el =
   List.iter (fun e ->
-    (Remove.get e) ()
+    (Remove.get e) ();
+    Remove.delete e
     ) el

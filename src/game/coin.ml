@@ -38,6 +38,25 @@ let create name level =
      
     ) [] (Level.filter_to_listpos Coin level)
     
-let unregister_systems e =
+let remove e =
   Collision_S.unregister e;
-  Draw_S.unregister e
+  Draw_S.unregister e;
+  (* Pour éviter bogue quand on saute sur l'objet
+  et qu'il disparaît *)
+  let player = Game_state.get_player () in
+  if Resting.get player = e then
+    Resting.set player Entity.dummy;
+  Remove.set e (fun () ->
+    ElementGrid.delete e;
+    Position.delete e;
+    Velocity.delete e;
+    Mass.delete e;
+    Box.delete e;
+    Name.delete e;
+    Elasticity.delete e;
+    Friction.delete e;
+    Surface.delete e;
+    Resting.delete e;
+    Remove_S.unregister e
+    );
+  Remove_S.register e

@@ -8,6 +8,11 @@ let remove e =
   Draw_system.remove_entity e;
   Move_S.unregister e;
   Autopilot_S.unregister e;
+  (* Pour éviter bogue quand on saute sur l'objet
+  et qu'il disparaît *)
+  let player = Game_state.get_player () in
+  if Resting.get player = e then
+    Resting.set player Entity.dummy;
   Remove.set e (fun () ->
     ElementGrid.delete e;
     Position.delete e;
@@ -21,7 +26,6 @@ let remove e =
     Resting.delete e;
     Ai.delete e;
     CollisionResolver.delete e;
-    
     Remove_S.unregister e
     );
   Remove_S.register e
@@ -94,7 +98,7 @@ let create name init_pos dir =
     match ElementGrid.get e2 with
     (* On touche goomba cela le tue instantanément *)
     | Enemy (Goomba dt_hit) -> 
-        Goomba.unregister_systems e2;
+        Goomba.remove e2;
         remove e
     (* On essaye de réduire au maximum les fuites mémoire *)
     | _ -> remove e

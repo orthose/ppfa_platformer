@@ -7,4 +7,4 @@ val create :
   -> (Vector.t -> Entity.t -> float -> unit) 
   -> Level.level -> Entity.t list
   
-val unregister_systems : Entity.t -> bool -> unit
+val remove : Entity.t -> bool -> unit

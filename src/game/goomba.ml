@@ -1,7 +1,7 @@
 open Component_defs
 
-let unregister_systems e =
-  Abstract_enemy.unregister_systems e true
+let remove e =
+  Abstract_enemy.remove e true
   
 let create level =
 
@@ -37,7 +37,7 @@ let create level =
     if dt -. dt_hit >= 1000. then
       (* Goomba est mort *)
       if Life.get e <= 0 then
-        unregister_systems e
+        remove e
       (* Goomba avance *)
       else
       let pos = 

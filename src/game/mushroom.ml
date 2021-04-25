@@ -3,12 +3,33 @@ open System_defs
 open Level
 open Ecs
 
-let unregister_systems e =
+let remove e =
   Collision_S.unregister e;
   Draw_system.remove_entity e;
   Move_S.unregister e;
   Force_S.unregister e;
-  Autopilot_S.unregister e
+  Autopilot_S.unregister e;
+  (* Pour éviter bogue quand on saute sur l'objet
+  et qu'il disparaît *)
+  let player = Game_state.get_player () in
+  if Resting.get player = e then
+    Resting.set player Entity.dummy;
+  Remove.set e (fun () ->
+    ElementGrid.delete e;
+    Position.delete e;
+    Velocity.delete e;
+    Mass.delete e;
+    SumForces.delete e;
+    Box.delete e;
+    Name.delete e;
+    Elasticity.delete e;
+    Friction.delete e;
+    Surface.delete e;
+    Resting.delete e;
+    Ai.delete e;
+    Remove_S.unregister e
+    );
+  Remove_S.register e
   
 let create dt_init name pos =
   let e = Entity.create () in
@@ -19,7 +40,7 @@ let create dt_init name pos =
   let move e dt =
     (* Destruction automatique du champigon *)
     if dt -. dt_init >= 5000. then
-      unregister_systems e
+      remove e
     else
       let f = SumForces.get e in
       let new_f = Vector.add f cte_velocity in

@@ -9,12 +9,12 @@ module Autopilot_S = System.Make(Autopilot_system)
 module Remove_S = System.Make(Remove_system)
 
 let () =
-  (* Toujours laisser Remove_S en premier pour
-  qu'il soit update en dernier  *)
-  System.register (module Remove_S);
   System.register (module Draw_S);
   System.register (module Move_S);
   System.register (module Control_S);
   System.register (module Force_S);
   System.register (module Collision_S);
-  System.register (module Autopilot_S)
+  System.register (module Autopilot_S);
+  (* Toujours laisser Remove_S en dernier pour
+  qu'il soit update en dernier  *)
+  System.register (module Remove_S)

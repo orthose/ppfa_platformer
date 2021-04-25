@@ -186,7 +186,7 @@ let create name x y =
     (* Récupération d'une pièce *)
     | Coin ->
         Game_state.incr_score ();
-        Coin.unregister_systems e2
+        Coin.remove e2
     (* Activation bloc mystère *)
     | Mystery true ->
         if side = Down then Mystery.use dt e2
@@ -211,14 +211,14 @@ let create name x y =
         Game_state.set_form Big;
         Game_state.incr_score ();
         Game_state.reset_life ();
-        Mushroom.unregister_systems e2;
+        Mushroom.remove e2;
         Box.set e Globals.player_box
     (* Récupération de fleur *)
     | Flower -> 
         Game_state.set_form Fire;
         Game_state.incr_score ();
         Game_state.reset_life ();
-        Flower.unregister_systems e2;
+        Flower.remove e2;
         Box.set e Globals.player_box
     | _ -> ()
     ;
