@@ -322,3 +322,18 @@ let fall () =
 let stop_fall () =
   action.move_fall <- false
   
+let fire () =
+  if Game_state.get_form () = Fire then
+    let pos = 
+      match Position.get (Game_state.get_player ()) with
+        | Point p ->
+          Vector.add p Vector.{ x = 
+            (if action.right_left then 1.0 else -.1.0) 
+            *. (match Game_state.get_form () with 
+            | Small -> (float)Globals.unit_box.width
+            | Big | Fire -> (float)Globals.player_box.width);
+            y = (float)Globals.unit_box.height /. 2.}
+        | _ -> failwith "Player has only Point position"
+      in
+      let _ = Fire.create "fire" pos action.right_left in ()
+  

@@ -11,7 +11,7 @@ let create name pos =
   Position.set e (Point pos);
   (* La fleur ne bouge pas *)
   Velocity.set e Vector.zero;
-  Mass.set e 0.0;
+  Mass.set e infinity;
   Box.set e Globals.unit_box;
   Name.set e name;
   Elasticity.set e 0.0;

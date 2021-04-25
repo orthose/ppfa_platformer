@@ -7,13 +7,15 @@ let unregister_systems e =
   Collision_S.unregister e;
   Draw_system.remove_entity e;
   Move_S.unregister e;
-  Force_S.unregister e
+  Force_S.unregister e;
+  Autopilot_S.unregister e
   
 let create dt_init name pos =
   let e = Entity.create () in
   
-  (* Fonction de mouvement pour Autopilot *)
+  (* Vitesse constante dont direction right ou left aléatoire *)
   let cte_velocity = Vector.mult 0.02 (Vector.random_dir_x ()) in
+  (* Fonction de mouvement pour Autopilot *)
   let move e dt =
     (* Destruction automatique du champigon *)
     if dt -. dt_init >= 5000. then
@@ -26,7 +28,6 @@ let create dt_init name pos =
   (* Components *)
   ElementGrid.set e Mushroom; 
   Position.set e (Point pos);
-  (* Direction initialisée aléatoirement *)
   Velocity.set e Vector.zero;
   Mass.set e 10.0;
   SumForces.set e Vector.zero;

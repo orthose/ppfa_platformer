@@ -21,7 +21,8 @@ let () =
     "boo.png";
     "ground.png"; "ice.png"; "toadstool.png"; "spike.png";
     "mystery.png"; "mystery-disabled.png"; 
-    "mushroom.png"; "flower.png"; "coin.png"; "fire.png";
+    "mushroom.png"; "flower.png"; "coin.png"; 
+    "fire-right.png"; "fire-left.png";
     "bg-hill.png"
     ] in
   let path = "resources/images/" in
@@ -58,7 +59,7 @@ let init_game _dt =
   Player.set_sprite 0;
   
   (* Création du background *)
-  let _bg = Bg.create (Graphics.get_image 
+  let _bg = Bg.create (Graphics.get_image
     "resources/images/bg-hill.png") in
   
   (* Contrôles du joueur *)
@@ -70,7 +71,7 @@ let init_game _dt =
   Input_handler.register_command (KeyUp "s") (Player.stop_fall);
   Input_handler.register_command (KeyDown "d") (Player.run_right);
   Input_handler.register_command (KeyUp "d") (Player.stop_run_right);
-  (*Input_handler.register_command (KeyDown "p") (Player.fire);*)
+  Input_handler.register_command (KeyDown "p") (Player.fire);
   
   Random.self_init ();
   System.init_all ();

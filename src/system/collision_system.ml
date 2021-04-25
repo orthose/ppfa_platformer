@@ -120,11 +120,14 @@ let update dt el =
               ) lpos
     ) el) (
       (Game_state.get_player ()) 
-      :: (List.filter_map (fun (e, v) -> 
+      :: (List.filter_map (fun (e, v) ->
+            (* Choisir les objets à ajouter précautionneusement
+            seulement s'ils doivent interagir avec les plateformes *)
             match v with
-            | Level.Enemy _ -> Some e
+            | Level.Enemy (Goomba _) -> Some e
             | Level.Mushroom -> Some e
             | Level.Flower -> Some e
+            | Level.Fire -> Some e
             | _ -> None
             ) (ElementGrid.members ()))
       )

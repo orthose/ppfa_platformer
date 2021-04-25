@@ -15,5 +15,5 @@ let update dt el =
     let speed = Vector.mult delta_t (Velocity.get e) in
     if not (Vector.is_zero speed) then
       (* On évite de mettre à jour les objets qui ne bougent pas *)
-      Position.set e (Point { x = pos.x +. speed.x; y = pos.y +. speed.y })
+      Position.set e (Point (Vector.add pos speed))
     ) el

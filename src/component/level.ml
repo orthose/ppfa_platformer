@@ -17,6 +17,8 @@ type t =
   | Coin
   (* Ennemis *)
   | Enemy of enemy
+  (* Projectiles *)
+  | Fire
 
 (* Matrice des plateformes *)
 type level = t array array 
