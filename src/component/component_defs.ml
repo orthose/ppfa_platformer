@@ -16,3 +16,23 @@ module Friction = Component.Make(struct type t = float let name = "friction" end
 module Elasticity = Component.Make(struct type t = float let name = "elasticity" end)
 module Life = Component.Make(struct type t = int let name = "life" end)
 module Ai = Component.Make(struct type t = float -> unit let name = "ai" end)
+module Remove =  Component.Make(struct type t = unit -> unit let name = "remove" end)
+
+let reset_all () =
+  Position.reset ();
+  Velocity.reset ();
+  Mass.reset ();
+  Box.reset ();
+  Surface.reset ();
+  Name.reset ();
+  CollisionResolver.reset ();
+  ElementGrid.reset ();
+  Resting.reset ();
+  SumForces.reset ();
+  Friction.reset ();
+  Elasticity.reset ();
+  Life.reset ();
+  Ai.reset ();
+  Remove.reset ()
+  
+  

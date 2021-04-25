@@ -5,6 +5,7 @@ sig
     val members: unit -> (Entity.t*T.t) list
     val has_component : Entity.t -> bool
     val delete : Entity.t -> unit
+    val reset : unit -> unit
 end
 
 (* Raised by get if the given entity does not have

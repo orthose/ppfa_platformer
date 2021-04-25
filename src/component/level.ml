@@ -18,7 +18,7 @@ type t =
   (* Ennemis *)
   | Enemy of enemy
   (* Projectiles *)
-  | Fire
+  | Fire of float option
 
 (* Matrice des plateformes *)
 type level = t array array 

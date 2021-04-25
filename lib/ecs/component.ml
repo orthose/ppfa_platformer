@@ -16,4 +16,6 @@ struct
   let has_component e = Entity.Table.mem elements e
 
   let delete e = Entity.Table.remove elements e
+  
+  let reset () = Entity.Table.reset elements
 end

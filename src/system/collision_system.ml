@@ -127,7 +127,7 @@ let update dt el =
             | Level.Enemy (Goomba _) -> Some e
             | Level.Mushroom -> Some e
             | Level.Flower -> Some e
-            | Level.Fire -> Some e
+            | Level.Fire _ -> Some e
             | _ -> None
             ) (ElementGrid.members ()))
       )

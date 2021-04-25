@@ -3,11 +3,28 @@ open System_defs
 open Level
 open Ecs
 
-let unregister_systems e =
+let remove e =
   Collision_S.unregister e;
   Draw_system.remove_entity e;
   Move_S.unregister e;
-  Autopilot_S.unregister e
+  Autopilot_S.unregister e;
+  Remove.set e (fun () ->
+    ElementGrid.delete e;
+    Position.delete e;
+    Velocity.delete e;
+    Mass.delete e;
+    Box.delete e;
+    Name.delete e;
+    Elasticity.delete e;
+    Friction.delete e;
+    Surface.delete e;
+    Resting.delete e;
+    Ai.delete e;
+    CollisionResolver.delete e;
+    
+    Remove_S.unregister e
+    );
+  Remove_S.register e
 
 (* dir = true -> right | dir = false -> left *)  
 let create name init_pos dir =
@@ -26,21 +43,31 @@ let create name init_pos dir =
       fun x -> x <= init_pos.Vector.x -. size_fire
   in
   let move e dt =
+    let duration = 
+      (* Astuce nécessaire car on ne peut pas initialiser dt
+      à partir de Player.fire *)
+      match ElementGrid.get e with
+      | Fire None -> 
+          ElementGrid.set e (Fire (Some dt)); 0.0
+      | Fire (Some dt_init) ->
+          dt -. dt_init
+      | _ -> failwith "Fire is not a fire"
+    in
     let pos = 
       match Position.get e with
       | Point p -> p
       | _ -> failwith "Fire has only Point position"
     in
     (* Destruction automatique de la flamme *)
-    if test_remove pos.Vector.x then
-      unregister_systems e
+    if duration >= 3000. 
+    || test_remove pos.Vector.x then remove e
     else
       Velocity.set e (Vector.add cte_velocity
         (Vector.mult 0.5 (Vector.random_y ()))
         )
   in
   (* Components *)
-  ElementGrid.set e Fire; 
+  ElementGrid.set e (Fire None); 
   Position.set e (Point init_pos);
   (* Direction initialisée aléatoirement *)
   Velocity.set e cte_velocity;
@@ -67,10 +94,10 @@ let create name init_pos dir =
     match ElementGrid.get e2 with
     (* On touche goomba cela le tue instantanément *)
     | Enemy (Goomba dt_hit) -> 
-        Goomba.unregister_systems e2
+        Goomba.unregister_systems e2;
+        remove e
     (* On essaye de réduire au maximum les fuites mémoire *)
-    | _ ->
-        unregister_systems e
+    | _ -> remove e
     );
   
   (* systems *)
