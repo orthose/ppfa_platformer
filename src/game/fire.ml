@@ -10,9 +10,9 @@ let remove e =
   Autopilot_S.unregister e;
   (* Pour éviter bogue quand on saute sur l'objet
   et qu'il disparaît *)
-  let player = Game_state.get_player () in
-  if Resting.get player = e then
-    Resting.set player Entity.dummy;
+  List.iter (fun (k, v) ->
+    if v = e then Resting.set k Entity.dummy
+    ) (Resting.members ());
   Remove.set e (fun () ->
     ElementGrid.delete e;
     Position.delete e;
@@ -39,12 +39,12 @@ let create name init_pos dir =
     if dir then Vector.{x = 0.3; y = 0.0}
     else Vector.{x = -.0.3; y = 0.0}
   in
-  let size_fire = 300. in
+  let distance = Globals.distance_fire in
   let test_remove =
     if dir then
-      fun x -> init_pos.Vector.x +. size_fire <= x
+      fun x -> init_pos.Vector.x +. distance <= x
     else
-      fun x -> x <= init_pos.Vector.x -. size_fire
+      fun x -> x <= init_pos.Vector.x -. distance
   in
   let move e dt =
     let duration = 
@@ -63,7 +63,7 @@ let create name init_pos dir =
       | _ -> failwith "Fire has only Point position"
     in
     (* Destruction automatique de la flamme *)
-    if duration >= 3000. 
+    if duration >= Globals.lifespan_fire
     || test_remove pos.Vector.x then remove e
     else
       Velocity.set e (Vector.add cte_velocity

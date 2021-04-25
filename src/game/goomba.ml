@@ -13,7 +13,8 @@ let create level =
       8 2
       121 99
       Globals.unit_box.width
-      Globals.unit_box.height 50.
+      Globals.unit_box.height
+      Globals.rate_goomba
   in
   let sprite_right =
     Texture.create_animation
@@ -22,7 +23,8 @@ let create level =
       8 2
       121 99
       Globals.unit_box.width
-      Globals.unit_box.height 50. 
+      Globals.unit_box.height
+      Globals.rate_goomba
   in
   
   (* Fonction de déplacement automatique *)
@@ -34,7 +36,7 @@ let create level =
       | _ -> failwith "Goomba is not a goomba"
     in
     (* Temps d'invincibilité de Goomba *)
-    if dt -. dt_hit >= 1000. then
+    if dt -. dt_hit >= Globals.immortal_time_goomba then
       (* Goomba est mort *)
       if Life.get e <= 0 then
         remove e
@@ -48,18 +50,18 @@ let create level =
       let v = Velocity.get e in
       let dir =
         (* Longueur de la distance parcourue par goomba *)
-        let size_walk = 200. in
+        let distance = Globals.distance_goomba in
         (* On va vers la droite *)
         if v.x >= 0.0 then
           (* On repart à gauche *)
-          if pos.x > init_pos.x +. size_walk then 
+          if pos.x > init_pos.x +. distance then 
             let () = Surface.set e sprite_left in
             -1.0
           else 1.0
         (* On va vers la gauche *)
         else
           (* On repart à droite *)
-          if pos.x < init_pos.x -. size_walk then 
+          if pos.x < init_pos.x -. distance then 
             let () = Surface.set e sprite_right in
             1.0
           else -1.0
@@ -76,7 +78,7 @@ let create level =
   (* Appel de la fonction de création d'ennemi *)
   Abstract_enemy.create
   "goomba" (Goomba 0.0) Vector.zero
-  box sprite_right 10. 3 true move level
+  box sprite_right 10. (Globals.life_goomba) true move level
   
 let flatten dt e =
   let sprite_flatten_left = 

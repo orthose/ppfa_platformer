@@ -14,6 +14,7 @@ let add_entity e =
   dynamic := e :: !dynamic
 let remove_entity e = 
   dynamic := List.filter (fun x -> x <> e) !dynamic
+let reset () = dynamic := []
 
 let draw dt ctx e x y =
   let box = Box.get e in 
@@ -85,7 +86,7 @@ let update dt el =
     "35px Arial"
   ) - 10) 35 "35px Arial" (
     (* Changement de couleur du score *)
-    if (dt -. (Game_state.get_dt_hit ())) <= Globals.immortal_time then
+    if (dt -. (Game_state.get_dt_hit ())) <= Globals.immortal_time_player then
       select_color blue
     else if life > 5 then select_color green
     else if life > 2 then select_color yellow

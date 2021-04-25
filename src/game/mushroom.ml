@@ -11,9 +11,9 @@ let remove e =
   Autopilot_S.unregister e;
   (* Pour éviter bogue quand on saute sur l'objet
   et qu'il disparaît *)
-  let player = Game_state.get_player () in
-  if Resting.get player = e then
-    Resting.set player Entity.dummy;
+  List.iter (fun (k, v) ->
+    if v = e then Resting.set k Entity.dummy
+    ) (Resting.members ());
   Remove.set e (fun () ->
     ElementGrid.delete e;
     Position.delete e;
@@ -39,7 +39,7 @@ let create dt_init name pos =
   (* Fonction de mouvement pour Autopilot *)
   let move e dt =
     (* Destruction automatique du champigon *)
-    if dt -. dt_init >= 5000. then
+    if dt -. dt_init >= Globals.lifespan_mushroom then
       remove e
     else
       let f = SumForces.get e in

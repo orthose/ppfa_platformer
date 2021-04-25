@@ -50,9 +50,9 @@ let remove e gravity =
       Force_S.unregister e;
     (* Pour éviter bogue quand on saute sur l'objet
     et qu'il disparaît *)
-    let player = Game_state.get_player () in
-    if Resting.get player = e then
-      Resting.set player Entity.dummy;
+    List.iter (fun (k, v) ->
+      if v = e then Resting.set k Entity.dummy
+      ) (Resting.members ());
     Remove.set e (fun () ->
       ElementGrid.delete e;
       Position.delete e;

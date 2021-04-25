@@ -25,7 +25,8 @@ let create name level =
       32 1
       33 34
       Globals.unit_box.width
-      Globals.unit_box.height 25.
+      Globals.unit_box.height
+      Globals.rate_coin
       );
     Resting.set e Entity.dummy;
       
@@ -43,9 +44,9 @@ let remove e =
   Draw_S.unregister e;
   (* Pour éviter bogue quand on saute sur l'objet
   et qu'il disparaît *)
-  let player = Game_state.get_player () in
-  if Resting.get player = e then
-    Resting.set player Entity.dummy;
+  List.iter (fun (k, v) ->
+    if v = e then Resting.set k Entity.dummy
+    ) (Resting.members ());
   Remove.set e (fun () ->
     ElementGrid.delete e;
     Position.delete e;

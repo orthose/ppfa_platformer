@@ -25,7 +25,8 @@ let create name level =
       4 1
       17 16
       Globals.unit_box.width
-      Globals.unit_box.height 100.
+      Globals.unit_box.height
+      Globals.rate_mystery
       );
     Resting.set e Entity.dummy;
       

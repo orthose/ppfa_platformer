@@ -12,16 +12,16 @@ let create level =
     let v = Velocity.get e in
     let dir =
       (* Longueur de la distance parcourue par boo *)
-      let size_walk = 100. in
+      let distance = Globals.distance_boo in
       (* On descend *)
       if v.y >= 0.0 then
         (* On remonte *)
-        if pos.y > init_pos.y +. size_walk then -1.0
+        if pos.y > init_pos.y +. distance then -1.0
         else 1.0
       (* On remonte *)
       else
         (* On descend *)
-        if pos.y < init_pos.y -. size_walk then 1.0
+        if pos.y < init_pos.y -. distance then 1.0
         else -1.0
     in
     Velocity.set e { x = 0.0; y = 0.05 *. dir }
@@ -39,6 +39,7 @@ let create level =
         "resources/images/boo.png")
     1 6
     32 32
-    (Globals.unit_box.width)
-    (Globals.unit_box.height) 100.
-    ) 0.0 100 false move level
+    Globals.unit_box.width
+    Globals.unit_box.height
+    Globals.rate_boo
+    ) 0.0 (Globals.life_boo) false move level

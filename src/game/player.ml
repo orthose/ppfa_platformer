@@ -140,7 +140,8 @@ let set_sprite i =
     s.num_w s.num_h
     s.sw s.sh
     Globals.player_box.width
-    Globals.player_box.height 25.
+    Globals.player_box.height
+    Globals.rate_player
     )
 
 let create name x y =
@@ -156,12 +157,12 @@ let create name x y =
     match ElementGrid.get e2 with
     (* Écrasement de Goomba *)
     | Enemy (Goomba dt_hit) when side = Top ->
-        if dt -. dt_hit >= 1000. then 
+        if dt -. dt_hit >= Globals.immortal_time_goomba then 
           Goomba.flatten dt e2
     (* Le joueur est touché par un ennemi *)
     | Enemy _ ->
         if dt -. (Game_state.get_dt_hit ()) 
-        > Globals.immortal_time then (
+        > Globals.immortal_time_player then (
           (* On change l'état de Mario *)
           Game_state.set_form (
             match Game_state.get_form () with
