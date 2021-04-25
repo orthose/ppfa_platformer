@@ -21,7 +21,7 @@ let () =
     "boo.png";
     "ground.png"; "ice.png"; "toadstool.png"; "spike.png";
     "mystery.png"; "mystery-disabled.png"; 
-    "mushroom.png"; "flower.png"; "coin.png";
+    "mushroom.png"; "flower.png"; "coin.png"; "fire.png";
     "bg-hill.png"
     ] in
   let path = "resources/images/" in
@@ -66,8 +66,11 @@ let init_game _dt =
   Input_handler.register_command (KeyUp "z") (Player.stop_jump);
   Input_handler.register_command (KeyDown "q") (Player.run_left);
   Input_handler.register_command (KeyUp "q") (Player.stop_run_left);
+  Input_handler.register_command (KeyDown "s") (Player.fall);
+  Input_handler.register_command (KeyUp "s") (Player.stop_fall);
   Input_handler.register_command (KeyDown "d") (Player.run_right);
   Input_handler.register_command (KeyUp "d") (Player.stop_run_right);
+  (*Input_handler.register_command (KeyDown "p") (Player.fire);*)
   
   Random.self_init ();
   System.init_all ();

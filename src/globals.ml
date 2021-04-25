@@ -12,6 +12,7 @@ let friction = -0.20
 let jump = Vector.{ x = 0.0; y = -0.19 }
 let left = Vector.{ x = -0.10 ; y = 0.0 }
 let right = Vector.{ x = 0.10 ; y = 0.0 }
+let down = Vector.{ x= 0.0; y = 0.02 }
 
 (* Scrolling vertical *)
 let y_scroll = false

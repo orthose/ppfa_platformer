@@ -30,8 +30,9 @@ resources/files/level*.txt
 # Lancement du jeu
 `firefox index.html`
 * Attention sous firefox il faut cliquer sur le joueur pour obtenir le focus sinon il est impossible de le bouger !
-* Les touches de contrôle sont les classiques Q, Z, D (en supposant
-que vous disposez d'un clavier azerty).
+* Les touches de contrôle sont les classiques Z, Q, S, D (en supposant
+que vous disposez d'un clavier azerty). Pour tirer une boule de feu
+lorsque vous êtes Mario Fire utilisez P.
 
 # Architecture du projet
 * Le fichier TODO.md contient toutes les tâches en cours

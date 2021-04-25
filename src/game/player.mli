@@ -19,3 +19,5 @@ val run_right : unit -> unit
 val stop_jump : unit -> unit
 val stop_run_left : unit -> unit
 val stop_run_right : unit -> unit
+val fall : unit -> unit
+val stop_fall : unit -> unit

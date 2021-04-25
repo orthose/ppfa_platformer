@@ -7,6 +7,7 @@ type action = {
   mutable move_left : bool;
   mutable move_right : bool;
   mutable jump : bool;
+  mutable move_fall : bool;
   mutable right_left : bool;
   mutable fall : bool;
 }
@@ -20,7 +21,7 @@ type player_sprite = {
 }
 
 let action = { 
-  move_left = false; move_right = false ; jump = false;
+  move_left = false; move_right = false ; jump = false; move_fall = false;
   (* Mémorise dans quel sens on avançait pour s'arrêter
   du bon côté au repos *) 
   right_left = true;
@@ -254,6 +255,7 @@ let do_move () =
   *)
   if action.move_left then move Globals.left;
   if action.move_right then move Globals.right;
+  if action.move_fall then move Globals.down;
   if action.jump && r <> Entity.dummy then begin
     (* On peut ici implémenter un double saut *)
     move Globals.jump;
@@ -314,4 +316,9 @@ let stop_run_right () =
     set_sprite 0;
   action.move_right <- false
   
+let fall () =
+  action.move_fall <- true
+  
+let stop_fall () =
+  action.move_fall <- false
   
