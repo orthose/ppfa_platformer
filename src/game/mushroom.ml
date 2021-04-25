@@ -13,7 +13,7 @@ let create dt_init name pos =
   let e = Entity.create () in
   
   (* Fonction de mouvement pour Autopilot *)
-  let cte_velocity = Vector.mult 0.02 (Vector.random_x ()) in
+  let cte_velocity = Vector.mult 0.02 (Vector.random_dir_x ()) in
   let move e dt =
     (* Destruction automatique du champigon *)
     if dt -. dt_init >= 5000. then

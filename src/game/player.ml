@@ -29,6 +29,7 @@ let action = {
 
 (* Tableau des paramètres de sprites *)
 let sprites = [|
+  (* Mario Big sprites[0-5]*)
   {
     sprite = "mario-pause-right.png";
     num_w = 1; num_h = 1;
@@ -58,11 +59,79 @@ let sprites = [|
     sprite = "mario-jump-left.png";
     num_w = 1; num_h = 1;
     sw = 17; sh = 32
-  }
+  };
+  (* Mario Small sprites[6-11] *)
+  {
+    sprite = "small-mario-pause-right.png";
+    num_w = 1; num_h = 1;
+    sw = 16; sh = 16
+  };
+  {
+    sprite = "small-mario-run-right.png";
+    num_w = 3; num_h = 1;
+    sw = 16; sh = 16
+  };
+  {
+    sprite = "small-mario-jump-right.png";
+    num_w = 1; num_h = 1;
+    sw = 16; sh = 16
+  };
+  {
+    sprite = "small-mario-pause-left.png";
+    num_w = 1; num_h = 1;
+    sw = 16; sh = 16
+  };
+  {
+    sprite = "small-mario-run-left.png";
+    num_w = 3; num_h = 1;
+    sw = 16; sh = 16
+  };
+  {
+    sprite = "small-mario-jump-left.png";
+    num_w = 1; num_h = 1;
+    sw = 16; sh = 16
+  };
+  (* Mario Fire sprites[12-17] *)
+  {
+    sprite = "fire-mario-pause-right.png";
+    num_w = 1; num_h = 1;
+    sw = 17; sh = 32
+  };
+  {
+    sprite = "fire-mario-run-right.png";
+    num_w = 3; num_h = 1;
+    sw = 17; sh = 32
+  };
+  {
+    sprite = "fire-mario-jump-right.png";
+    num_w = 1; num_h = 1;
+    sw = 17; sh = 32
+  };
+  {
+    sprite = "fire-mario-pause-left.png";
+    num_w = 1; num_h = 1;
+    sw = 17; sh = 32
+  };
+  {
+    sprite = "fire-mario-run-left.png";
+    num_w = 3; num_h = 1;
+    sw = 17; sh = 32
+  };
+  {
+    sprite = "fire-mario-jump-left.png";
+    num_w = 1; num_h = 1;
+    sw = 17; sh = 32
+  };
 |]
 
 let set_sprite i =
-  let s = sprites.(i) in
+  let s = sprites.(i +
+    (* Décalage dans sprites *)
+    match Game_state.get_form () with
+    | Big -> 0
+    | Small -> 6
+    | Fire -> (6 * 2)
+    ) in
   Surface.set (Game_state.get_player ()) (
     Texture.create_animation
     (Graphics.get_image 
@@ -86,14 +155,19 @@ let create name x y =
     match ElementGrid.get e2 with
     (* Le joueur est touché par un ennemi *)
     | Enemy _ ->
-        Game_state.set_form (
-          match Game_state.get_form  () with
-          | Small -> Small
-          | Big -> Small
-          | Fire -> Big
-          );
         if dt -. (Game_state.get_dt_hit ()) 
         > Globals.immortal_time then (
+          (* On change l'état de Mario *)
+          Game_state.set_form (
+            match Game_state.get_form () with
+            | Small ->
+                Box.set e Globals.unit_box;
+                Small
+            | Big ->
+                Box.set e Globals.unit_box;
+                Small
+            | Fire -> Big
+            );
           (* On démarre le temps d'invincibilité *)
           Game_state.set_dt_hit dt;
           (* On fait diminuer la vie *)
@@ -113,14 +187,34 @@ let create name x y =
         if side = Down then Mystery.use dt e2
     (* Récupération de champigon *)
     | Mushroom ->
+        (* Petit calcul de correction de position
+        pour éviter de rester coincer dans une plateforme *)
+        if Game_state.get_form () = Small then
+          let pos = 
+            match Position.get e with 
+            | Point p -> p
+            | _ -> failwith "Player has only Point position" 
+          in
+          Position.set e (Point
+            (Vector.sub pos Vector.{
+              x = 0.0;
+              y = float_of_int (
+                    Globals.player_box.height
+                    - Globals.unit_box.height
+                    )})
+              );
         Game_state.set_form Big;
         Game_state.incr_score ();
-        Game_state.reset_life ()
+        Game_state.reset_life ();
+        Mushroom.unregister_systems e2;
+        Box.set e Globals.player_box
     (* Récupération de fleur *)
     | Flower -> 
         Game_state.set_form Fire;
         Game_state.incr_score ();
-        Game_state.reset_life ()
+        Game_state.reset_life ();
+        Flower.unregister_systems e2;
+        Box.set e Globals.player_box
     | _ -> ()
     ;
     

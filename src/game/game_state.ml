@@ -22,7 +22,7 @@ let state = ref {
   life = init_life;
   game_over = false;
   dt_hit = 0.0;
-  form = Small;
+  form = Big;
 }
 
 let get_player () = !state.player

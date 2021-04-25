@@ -11,6 +11,7 @@ let pp fmt a = Format.fprintf fmt "(%f, %f)" a.x a.y
 
 let zero = { x = 0.0; y = 0.0 }
 let is_zero v = v.x = 0.0 && v.y = 0.0
+
 let random_x () = { 
   x = 
     (let r = Random.float 1.0 in
@@ -19,4 +20,11 @@ let random_x () = {
     y = 0.0 }
 let random_y () = 
   let r = random_x () in
+  { x = 0.0; y = r.x }
+let random_dir_x () = {
+  x = if Random.bool () then 1.0 else -.1.0;
+  y = 0.0
+}
+let random_dir_y () =
+  let r = random_dir_x () in
   { x = 0.0; y = r.x }
