@@ -40,4 +40,12 @@ let create name enemy velocity box texture mass life gravity move level =
     e :: acc
      
     ) [] (Level.filter_to_listpos (Enemy enemy) level)
+    
+let unregister_systems e gravity =
+    Collision_S.unregister e;
+    Draw_S.unregister e;
+    Move_S.unregister e;
+    Autopilot_S.unregister e;
+    if gravity then
+      Force_S.unregister e
  

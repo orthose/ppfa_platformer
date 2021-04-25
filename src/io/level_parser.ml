@@ -9,7 +9,7 @@ let link = function
   | '^' -> Spike
   | '?' -> Mystery true
   | '$' -> Coin 
-  | 'g' -> Enemy Goomba
+  | 'g' -> Enemy (Goomba 0.0)
   | 'b' -> Enemy Boo
   | _ -> failwith "Unknown token"
 

@@ -153,6 +153,10 @@ let create name x y =
   Resting.set e Entity.dummy;
   CollisionResolver. set e (fun dt side _ e2 ->
     match ElementGrid.get e2 with
+    (* Écrasement de Goomba *)
+    | Enemy (Goomba dt_hit) when side = Top ->
+        if dt -. dt_hit >= 1000. then 
+          Goomba.flatten dt e2
     (* Le joueur est touché par un ennemi *)
     | Enemy _ ->
         if dt -. (Game_state.get_dt_hit ()) 

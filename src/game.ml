@@ -16,7 +16,9 @@ let chain_functions f_list =
 (* ATTENTION: Ne pas mettre dans init_game *)
 let () =
   let lsprites = [
-    "goomba-left.png"; "goomba-right.png"; "boo.png";
+    "goomba-left.png"; "goomba-right.png";
+    "goomba-flatten-left.png"; "goomba-flatten-right.png"; 
+    "boo.png";
     "ground.png"; "ice.png"; "toadstool.png"; "spike.png";
     "mystery.png"; "mystery-disabled.png"; 
     "mushroom.png"; "flower.png"; "coin.png";
