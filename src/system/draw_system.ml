@@ -16,6 +16,16 @@ let remove_entity e =
   dynamic := List.filter (fun x -> x <> e) !dynamic
 let reset () = dynamic := []
 
+(* Clignotement de la barre de vie *)
+let dt_blink = ref (0.0, true)
+let blink dt =
+  let (dt_last, res) = !dt_blink in
+  let () = 
+    if dt -. dt_last >= Globals.rate_blink then 
+      dt_blink := (dt, not res)
+    else dt_blink := (dt_last, res)
+  in res
+
 let draw dt ctx e x y =
   let box = Box.get e in 
   match Surface.get e with
@@ -72,8 +82,14 @@ let update dt el =
   (0 + 5) 35 "35px Arial" (
     select_color white
     );
-    
+  
   (* Affichage de la vie *)
+  let player_is_immortal = 
+    (dt -. (Game_state.get_dt_hit ())) <= Globals.immortal_time_player
+  in
+  (* Si immortel il faut faire clignoter *)
+  if (not player_is_immortal) 
+  || (player_is_immortal && (blink dt)) then
   let life = Game_state.get_life () in
   (* Création du nombre de coeurs sous forme string *)
   let s = String.concat "" (List.init (
@@ -85,11 +101,6 @@ let update dt el =
     Gfx.measure_text ctx s
     "35px Arial"
   ) - 10) 35 "35px Arial" (
-    (* Changement de couleur du score *)
-    if (dt -. (Game_state.get_dt_hit ())) <= Globals.immortal_time_player then
-      select_color blue
-    else if life > 5 then select_color green
-    else if life > 2 then select_color yellow
-    else select_color red
+    select_color red
     );
   

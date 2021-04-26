@@ -14,12 +14,10 @@ type t = {
   mutable  form : form_player;
 }
 
-let init_life = 10
-
 let state = ref {
   player = Entity.dummy;
   score = 0;
-  life = init_life;
+  life = Globals.life_player;
   game_over = false;
   dt_hit = 0.0;
   form = Big;
@@ -51,4 +49,4 @@ let init e =
   state := {!state with player = e}
   
 let reset_life () =
-  !state.life <- init_life
+  !state.life <- Globals.life_player

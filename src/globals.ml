@@ -18,7 +18,7 @@ let down = Vector.{ x= 0.0; y = 0.02 }
 let y_scroll = false
 
 (* Temps d'invincibilité *)
-let immortal_time_player = 2000.
+let immortal_time_player = 3000.
 let immortal_time_goomba = 1000.
 
 (* Distances parcourues par les IA *)
@@ -27,6 +27,7 @@ let distance_boo = 100.
 let distance_fire = 300.
 
 (* Durée de vie des objets *)
+let life_player = 5
 let life_goomba = 3
 let life_boo = 100 (* Boo est immortel *)
 let lifespan_mushroom = 5000.
@@ -38,6 +39,7 @@ let rate_goomba = 50.
 let rate_boo = 100.
 let rate_coin = 25.
 let rate_mystery = 100.
+let rate_blink = 300.
 
 
 
