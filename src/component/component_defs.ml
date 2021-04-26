@@ -5,7 +5,13 @@ module Point = struct
 module Position = Component.Make(struct include Point let name = "position" end)
 module Speed = struct
   type t = Physical of Vector.t | Animation of Vector.t end
-module Velocity = Component.Make(struct include Speed let name = "velocity" end)
+module Velocity = struct include Component.Make(struct include Speed let name = "velocity" end)
+ let set = 
+  if Globals.activate_max_velocity then
+    fun e v ->
+      let v' = match v with Speed.Physical a -> a | Speed.Animation a -> a in 
+      if Vector.norm v' <= Globals.max_velocity then set e v else ()
+  else set end
 module Mass = Component.Make (struct type t = float let name = "mass" end)
 module Box = Component.Make(struct include Rect let name = "box" end)
 module Surface = Component.Make (struct include Texture let name = "texture" end)

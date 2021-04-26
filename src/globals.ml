@@ -13,6 +13,8 @@ let jump = Vector.{ x = 0.0; y = -0.19 }
 let left = Vector.{ x = -0.10 ; y = 0.0 }
 let right = Vector.{ x = 0.10 ; y = 0.0 }
 let down = Vector.{ x= 0.0; y = 0.02 }
+let activate_max_velocity = false
+let max_velocity = 1.0
 
 (* Scrolling vertical *)
 let y_scroll = false
