@@ -9,6 +9,7 @@ type t =
   | Ground
   | Ice
   | Toadstool
+  | Sand
   | Spike
   | Mystery of bool
   | Switch

@@ -4,8 +4,9 @@ open Level
 let link = function
   | '-' -> Empty
   | '*' -> Ground
-  | '~' -> Ice
+  | '=' -> Ice
   | '#' -> Toadstool
+  | '~' -> Sand
   | '^' -> Spike
   | '?' -> Mystery true
   | '!' -> Switch

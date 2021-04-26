@@ -32,7 +32,7 @@ let () =
     "goomba-flatten-left.png"; "goomba-flatten-right.png"; 
     "boo.png";
     "ground.png"; "ice.png"; "toadstool.png"; "spike.png";
-    "mystery.png"; "mystery-disabled.png"; 
+    "sand.png"; "mystery.png"; "mystery-disabled.png"; 
     "mushroom.png"; "flower.png"; "coin.png"; 
     "switch.png"; "switch-disabled.png";
     "fire-right.png"; "fire-left.png";
@@ -61,8 +61,9 @@ let init_game _dt =
   let _ground = Ground.create "ground" level in
   let _ice = Ice.create "ice" level in
   let _toadstool = Toadstool.create "toadstool" level in
-  let _coin = Coin.create "coin" level in
+  let _sand = Sand.create "sand" level in
   let _spike = Spike.create "spike" level in
+  let _coin = Coin.create "coin" level in
   let _mystery = Mystery.create "mystery" level in
   let _switch = Switch.create "switch" level in
   
