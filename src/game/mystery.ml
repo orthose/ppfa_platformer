@@ -13,7 +13,7 @@ let create name level =
     Position.set e (Point {x = x; y = y});
     (* Le bloc mystère ne bouge pas mais nécessaire
     pour l'animation *)
-    Velocity.set e Vector.{x = 0.5; y=0.0};
+    Velocity.set e (Animation Vector.{x = 0.5; y=0.0});
     Mass.set e infinity;
     Box.set e Globals.unit_box;
     Name.set e name;

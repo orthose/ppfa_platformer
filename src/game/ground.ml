@@ -11,7 +11,7 @@ let create name level =
   Box.set e Globals.unit_box;
   Position.set e (MultiPoint 
     (Level.filter_to_listpos Ground level));
-  Velocity.set e Vector.zero;
+  Velocity.set e (Physical Vector.zero);
   Mass.set e infinity;
   Name.set e name;
   Surface.set e (Texture.create_image

@@ -66,15 +66,15 @@ let create name init_pos dir =
     if duration >= Globals.lifespan_fire
     || test_remove pos.Vector.x then remove e
     else
-      Velocity.set e (Vector.add cte_velocity
+      Velocity.set e (Physical (Vector.add cte_velocity
         (Vector.mult 0.5 (Vector.random_y ()))
-        )
+        ))
   in
   (* Components *)
   ElementGrid.set e (Fire None); 
   Position.set e (Point init_pos);
   (* Direction initialisée aléatoirement *)
-  Velocity.set e cte_velocity;
+  Velocity.set e (Physical cte_velocity);
   Mass.set e 0.0;
   Box.set e (Rect.{
     width = Globals.unit_box.width / 2;

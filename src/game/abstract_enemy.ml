@@ -11,7 +11,7 @@ let create name enemy velocity box texture mass life gravity move level =
     (* Components *)
     ElementGrid.set e (Enemy enemy);
     Position.set e (Point {x = x; y = y});
-    Velocity.set e velocity;
+    Velocity.set e (Physical velocity);
     Mass.set e mass;
     Box.set e box;
     Name.set e name;

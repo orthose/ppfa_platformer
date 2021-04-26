@@ -49,7 +49,7 @@ let create dt_init name pos =
   (* Components *)
   ElementGrid.set e Mushroom; 
   Position.set e (Point pos);
-  Velocity.set e Vector.zero;
+  Velocity.set e (Physical Vector.zero);
   Mass.set e 10.0;
   SumForces.set e Vector.zero;
   Box.set e Globals.unit_box;

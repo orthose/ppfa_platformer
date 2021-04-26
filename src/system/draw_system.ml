@@ -43,7 +43,11 @@ let draw dt ctx e x y =
       box.width
       box.height
   | Animation(animation) ->
-    let v = Velocity.get e in
+    let v = 
+      match Velocity.get e with
+      | Physical v -> v
+      | Animation v -> v 
+    in
     let render = Texture.get_frame dt animation (
       max (abs_float v.x) (abs_float v.y)) in
     Gfx.blit_scale ctx render

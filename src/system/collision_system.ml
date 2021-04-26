@@ -12,8 +12,16 @@ let compute_collision dt e1 e2 pos1 pos2 =
   let box1 = Box.get e1 in
   let box2 = Box.get e2 in
   (* les vitesses *)
-  let v1 = Velocity.get e1 in
-  let v2 = Velocity.get e2 in
+  let v1 = 
+    match Velocity.get e1 with 
+    | Physical v -> v
+    | Animation _ -> Vector.zero
+  in
+  let v2 = 
+    match Velocity.get e2 with
+    | Physical v -> v
+    | Animation _ -> Vector.zero
+  in
   (* [1] la soustraction de Minkowski *)
   let s_pos, s_rect = Rect.mdiff pos2 box2 pos1 box1 in
   (* [2] si intersection et un des objets est mobile, les objets rebondissent *)
@@ -78,7 +86,7 @@ let compute_collision dt e1 e2 pos1 pos2 =
     (* Simplification: Inutile car e2 est censée rester immobile *)
     (*let new_v2 = Vector.sub v2 (Vector.mult (j/. m2) n) in*)
     (* [9] mise à jour des vitesses *)
-    Velocity.set e1 new_v1;
+    Velocity.set e1 (Physical new_v1);
     (* Simplification: Inutile car e2 est censée rester immobile *)
     (*Velocity.set e2 new_v2;*)
     (* [10] appel des resolveurs *)

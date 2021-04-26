@@ -7,9 +7,13 @@ let create level =
     let pos = 
       match Position.get e with
       | Point(p) -> p
-      | _ -> failwith "Enemy has only Point position"
+      | _ -> failwith "Boo has only Point position"
     in
-    let v = Velocity.get e in
+    let v = 
+      match Velocity.get e with
+      | Physical v -> v
+      | _ -> failwith "Boo has only Physical velocity" 
+    in
     let dir =
       (* Longueur de la distance parcourue par boo *)
       let distance = Globals.distance_boo in
@@ -24,7 +28,7 @@ let create level =
         if pos.y < init_pos.y -. distance then 1.0
         else -1.0
     in
-    Velocity.set e { x = 0.0; y = 0.05 *. dir }
+    Velocity.set e (Physical { x = 0.0; y = 0.05 *. dir })
   in
   
   let box = Rect.{

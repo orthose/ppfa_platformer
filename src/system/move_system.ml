@@ -12,7 +12,11 @@ let update dt el =
       | Point pos -> pos
       | _ -> failwith "Cannot move a list of positions"
     in
-    let speed = Vector.mult delta_t (Velocity.get e) in
+    let speed = Vector.mult delta_t (
+      match Velocity.get e with
+      | Physical v -> v
+      | Animation _ -> Vector.zero
+      ) in
     if not (Vector.is_zero speed) then
       (* On évite de mettre à jour les objets qui ne bougent pas *)
       Position.set e (Point (Vector.add pos speed))

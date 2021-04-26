@@ -147,7 +147,7 @@ let set_sprite i =
 let create name x y =
   let e = Entity.create () in
   Position.set e (Point { x = x; y = y});
-  Velocity.set e Vector.zero;
+  Velocity.set e (Physical Vector.zero);
   Mass.set e 10.;
   Box.set e Globals.player_box;
   Name.set e name;

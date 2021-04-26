@@ -45,9 +45,13 @@ let create level =
       let pos = 
         match Position.get e with
         | Point(p) -> p
-        | _ -> failwith "Enemy has only Point position"
+        | _ -> failwith "Goomba has only Point position"
       in
-      let v = Velocity.get e in
+      let v = 
+        match Velocity.get e with
+        | Physical v -> v
+        | _ -> failwith "Goomba has only Physical velocity"
+      in
       let dir =
         (* Longueur de la distance parcourue par goomba *)
         let distance = Globals.distance_goomba in
@@ -97,7 +101,12 @@ let flatten dt e =
   in
   ElementGrid.set e (Enemy (Goomba dt));
   Life.set e (Life.get e - 1);
-  if (Velocity.get e).Vector.x >= 0.0 then
+  let v = 
+    match Velocity.get e with 
+    | Physical v -> v
+    | _ -> failwith "Goomba has only Physical velocity"
+  in
+  if v.x >= 0.0 then
     Surface.set e sprite_flatten_right
   else 
     Surface.set e sprite_flatten_left

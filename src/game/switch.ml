@@ -11,7 +11,7 @@ let create name level =
     (* Components *)
     ElementGrid.set e Switch; 
     Position.set e (Point {x = x; y = y});
-    Velocity.set e Vector.zero;
+    Velocity.set e (Physical Vector.zero);
     Mass.set e infinity;
     Box.set e Globals.unit_box;
     Name.set e name;

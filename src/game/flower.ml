@@ -10,7 +10,7 @@ let create name pos =
   ElementGrid.set e Flower; 
   Position.set e (Point pos);
   (* La fleur ne bouge pas *)
-  Velocity.set e Vector.zero;
+  Velocity.set e (Physical Vector.zero);
   Mass.set e infinity;
   Box.set e Globals.unit_box;
   Name.set e name;

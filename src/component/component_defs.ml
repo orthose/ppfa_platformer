@@ -3,7 +3,9 @@ open Ecs
 module Point = struct 
   type t = Point of Vector.t | MultiPoint of Vector.t list end
 module Position = Component.Make(struct include Point let name = "position" end)
-module Velocity = Component.Make(struct include Vector let name = "velocity" end)
+module Speed = struct
+  type t = Physical of Vector.t | Animation of Vector.t end
+module Velocity = Component.Make(struct include Speed let name = "velocity" end)
 module Mass = Component.Make (struct type t = float let name = "mass" end)
 module Box = Component.Make(struct include Rect let name = "box" end)
 module Surface = Component.Make (struct include Texture let name = "texture" end)

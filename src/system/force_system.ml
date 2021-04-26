@@ -17,7 +17,11 @@ let update dt el =
       vitesse = accéleration * temps
       vitesse = forces/masse * temps
     *)
-    let old_v = Velocity.get e in
+    let old_v = 
+      match Velocity.get e with
+      | Physical v -> v
+      | _ -> failwith "Please use Physical velocity for Force_S" 
+    in
     let mass = Mass.get e in
     let forces = SumForces.get e in
     let forces = Vector.add forces (Vector.mult mass g) in (* on ajoute la gravité *)
@@ -31,7 +35,7 @@ let update dt el =
         let f = Vector.mult (mass /. delta) { x= old_v.x *. friction ; y = 0.0 } in
         Vector.add f forces
     in
-    let new_v = Vector.add old_v (Vector.mult (delta/. mass) forces) in
+    let new_v = Speed.Physical (Vector.add old_v (Vector.mult (delta/. mass) forces)) in
     Velocity.set e new_v;
     SumForces.set e Vector.zero;
     ) el
