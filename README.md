@@ -203,9 +203,11 @@ update des systèmes on se retrouve avec des MissingComponent. Donc j'ai introdu
 J'ai dû rusé en ajoutant une liste d'entités dynamiquement créées et qui doivent
 s'afficher par-dessus le background et pas après. Je l'ai fait dans Draw_system.ml.
 
+* Les boules de feu ne disparaissaient que après avoir parcouru une certaine distance,
+mais pas au bout d'un certain temps. J'ai dû utiliser un float option pour initialiser
+le temps de création de la boule de feu.
+
 * Bogue non-résolu : Je peux passer à travers les plateformes si je reste appuyé
 sur les touches pour avancer.
-
-* Bogue non-résolu : Mes boules de feu ne vont plus assez loin au bout d'un moment.
 
 * Bogue non-résolu : Si on ne joue pas pendant quelques temps, ou qu'on quitte le navigateur le jeu plante sans raison. On va mettre ça sur le dos de Javascript.

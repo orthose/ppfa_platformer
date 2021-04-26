@@ -4,7 +4,6 @@ open Level
 open Ecs
 
 let remove e =
-  Collision_S.unregister e;
   Draw_system.remove_entity e;
   Move_S.unregister e;
   Autopilot_S.unregister e;
@@ -105,7 +104,8 @@ let create name init_pos dir =
     );
   
   (* systems *)
-  Collision_S.register e;
+  (* On enregistre à la main dans le système de Collision *)
+  (*Collision_S.register e;*)
   Draw_system.add_entity e;
   Move_S.register e;
   Autopilot_S.register e;
