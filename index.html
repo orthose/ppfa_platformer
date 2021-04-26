@@ -15,12 +15,30 @@
                 width:800px;
                 height:600px;
             }
+            p, h1 {
+              margin: auto;
+              text-align: center;
+              border: 1pt solid steelblue;
+              width:800px;
+              block-size:max-content;
+              background: steelblue;
+              font-family: ubuntu;
+              color: white;
+            }
+            p {
+              font-size: 20px;
+            }
             body {
+              background: skyblue;
             }
         </style>
     </head>
     <body>
+        <h1>Mega Mario Bros Online</h1>
         <canvas tabindex="0" id="game_canvas" width="800" height="600"></canvas>
         <script type="text/javascript" src="_build/default/prog/game_js.bc.js"></script>
+        <p>Touches pour se déplacer&nbsp;:&nbsp;Z,&nbsp;Q,&nbsp;S,&nbsp;D<br>
+        Touche pour lancer des boules de feu&nbsp;:&nbsp;P<br>
+        Cliquez sur Mario pour obtenir le focus</p>
     </body>
 </html>
