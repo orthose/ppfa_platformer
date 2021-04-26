@@ -189,8 +189,8 @@ let create name x y =
         Game_state.incr_score ();
         Coin.remove e2
     (* Activation bloc mystère *)
-    | Mystery true ->
-        if side = Down then Mystery.use dt e2
+    | Mystery true when side = Down ->
+        Mystery.use dt e2
     (* Récupération de champigon *)
     | Mushroom ->
         (* Petit calcul de correction de position
@@ -221,6 +221,9 @@ let create name x y =
         Game_state.reset_life ();
         Flower.remove e2;
         Box.set e Globals.player_box
+    (* Appui sur un interrupteur *)
+    | Switch when side = Top ->
+        Switch.use e2
     | _ -> ()
     ;
     

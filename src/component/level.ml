@@ -11,6 +11,7 @@ type t =
   | Toadstool
   | Spike
   | Mystery of bool
+  | Switch
   (* Items *)
   | Mushroom
   | Flower

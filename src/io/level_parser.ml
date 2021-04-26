@@ -8,6 +8,7 @@ let link = function
   | '#' -> Toadstool
   | '^' -> Spike
   | '?' -> Mystery true
+  | '!' -> Switch
   | '$' -> Coin 
   | 'g' -> Enemy (Goomba 0.0)
   | 'b' -> Enemy Boo
