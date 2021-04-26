@@ -115,7 +115,9 @@ let end_game _dt =
   System.reset_all ();
   Draw_system.reset ();
   Component_defs.reset_all ();
+  let form = Game_state.get_form () in
   Game_state.reset ();
+  Game_state.set_form form;
   false
 
 let f_lists = [Graphics.still_loading; init_game; play_game; end_game]

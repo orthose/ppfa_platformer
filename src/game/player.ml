@@ -149,7 +149,11 @@ let create name x y =
   Position.set e (Point { x = x; y = y});
   Velocity.set e (Physical Vector.zero);
   Mass.set e 10.;
-  Box.set e Globals.player_box;
+  let () = 
+    match Game_state.get_form () with
+    | Small -> Box.set e Globals.unit_box
+    | Big | Fire -> Box.set e Globals.player_box
+  in
   Name.set e name;
   SumForces.set e Vector.zero;
   Resting.set e Entity.dummy;
@@ -181,7 +185,10 @@ let create name x y =
           )
     (* Le joueur touche une plateforme piquante 
     Il meurt instantanément ! *)
-    | Spike -> 
+    | Spike ->
+        (* On devient Mario Small *)
+        Box.set e Globals.unit_box;
+        Game_state.set_form Small;
         (* On fait diminuer la vie *)
         Game_state.decr_life ()
     (* Récupération d'une pièce *)
