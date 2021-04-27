@@ -185,7 +185,7 @@ let create name x y =
           )
     (* Le joueur touche une plateforme piquante 
     Il meurt instantanément ! *)
-    | Spike ->
+    | Spike when side = Top->
         (* On devient Mario Small *)
         Box.set e Globals.unit_box;
         Game_state.set_form Small;
