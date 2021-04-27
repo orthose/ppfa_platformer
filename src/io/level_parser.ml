@@ -3,6 +3,7 @@ open Level
 (* Lien string -> constructeur *)
 let link = function
   | '-' -> Empty
+  | '+' -> Invisible
   | '*' -> Ground
   | '=' -> Ice
   | '#' -> Toadstool

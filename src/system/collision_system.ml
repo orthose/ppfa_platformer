@@ -45,12 +45,17 @@ let compute_collision dt e1 e2 pos1 pos2 =
     let n_v2 = Vector.norm v2 in
     let s = (n_v1 +. n_v2) in
     let n1 = n_v1 /. s in
-    let n2 = n_v2 /. s in
-    let delta_pos1 = Vector.mult n1 n in
-    let _delta_pos2 = Vector.mult (Float.neg n2) n in
+    (*let n2 = n_v2 /. s in*)
+    let delta_pos1 = (Vector.mult n1 n) in
+    (*let _delta_pos2 = Vector.mult (Float.neg n2) n in*)
+    
+    (* Probablement responsable d'un bogue *)
+    (*let Vector.{x=xx;y=yy} = Vector.add pos1 delta_pos1 in
+    Gfx.debug (Printf.sprintf "%f %f" xx yy);*)
     Position.set e1 (Point (Vector.add pos1 delta_pos1));
+    
     (* Simplification: Inutile l'entité e2 est statique *)
-    (*Position.set e2 (Vector.add pos2 delta_pos2);*)
+    (*Position.set e2 (Point (Vector.add pos2 delta_pos2));*)
     if Resting.has_component e1 then Resting.set e1 (
       if n = c then e2 else Entity.dummy
       );

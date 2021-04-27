@@ -16,6 +16,7 @@ let blue = Color (Gfx.color 0 0 255 255)
 let green = Color (Gfx.color 0 255 0 255)
 let yellow = Color (Gfx.color 255 255 0 255)
 let gray = Color (Gfx.color 128 128 128 255)
+let invisible = Color (Gfx.color 255 255 255 0)
 
 let select_color c =
   match c with

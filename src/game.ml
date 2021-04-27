@@ -58,6 +58,7 @@ let init_game _dt =
   let level = Level_parser.parse ("/static/files/"^level_file) in
   
   (* Création des plateformes *)
+  let _invisible = Invisible.create "invisible" level in
   let _ground = Ground.create "ground" level in
   let _ice = Ice.create "ice" level in
   let _toadstool = Toadstool.create "toadstool" level in
@@ -72,8 +73,9 @@ let init_game _dt =
   let _boo = Boo.create level in
   
   (* Création du joueur *)
-  let player = Player.create "mario" 0. (
-    (float)Globals.unit_box.height *. 15.) in
+  let player = Player.create "mario"
+  ((float)Globals.unit_box.width *. 1.)  
+  ((float)Globals.unit_box.height *. 15.) in
   Game_state.init player;
   Player.set_sprite 0;
   

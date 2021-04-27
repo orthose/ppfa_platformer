@@ -6,6 +6,7 @@ type enemy =
 type t =
   (* Plateformes *)
   | Empty
+  | Invisible
   | Ground
   | Ice
   | Toadstool

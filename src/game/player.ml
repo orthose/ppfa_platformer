@@ -261,6 +261,12 @@ let move fdir =
 
 let do_move () =
   let r = Resting.get (Game_state.get_player ()) in
+  
+  (* Bogue non-résolu : absorption dans plateforme *)
+  (*let Physical(Velocity.{x=x;y=y}) = 
+  Velocity.get (Game_state.get_player ()) in
+  Gfx.debug (Printf.sprintf "%f %f" x y);*)
+  
   (* Si on teste r pour les mouvement horizontaux, on ne peut
      pas diriger le personnage en l'air : difficile de le contrôler
   *)
