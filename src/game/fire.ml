@@ -96,7 +96,7 @@ let create name init_pos dir =
   CollisionResolver.set e (fun dt side _ e2 ->
     match ElementGrid.get e2 with
     (* On touche goomba cela le tue instantanément *)
-    | Enemy (Goomba dt_hit) -> 
+    | Enemy (Goomba (dt_hit, _)) -> 
         Goomba.remove e2;
         remove e
     (* On essaye de réduire au maximum les fuites mémoire *)

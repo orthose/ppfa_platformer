@@ -160,7 +160,7 @@ let create name x y =
   CollisionResolver. set e (fun dt side _ e2 ->
     match ElementGrid.get e2 with
     (* Écrasement de Goomba *)
-    | Enemy (Goomba dt_hit) when side = Top ->
+    | Enemy (Goomba (dt_hit, _)) when side = Top ->
         if dt -. dt_hit >= Globals.immortal_time_goomba then 
           Goomba.flatten dt e2
     (* Le joueur est touché par un ennemi *)

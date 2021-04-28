@@ -46,4 +46,4 @@ let create level =
     Globals.unit_box.width
     Globals.unit_box.height
     Globals.rate_boo
-    ) 0.0 (Globals.life_boo) false move level
+    ) 0.0 false move level

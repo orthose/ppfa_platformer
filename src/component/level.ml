@@ -1,6 +1,6 @@
 (* Les différents types d'éléments de la grille de niveau *)
 type enemy =
-  | Goomba of float
+  | Goomba of float * int (* dt_hit, life *)
   | Boo
 
 type t =
@@ -12,7 +12,7 @@ type t =
   | Toadstool
   | Sand
   | Spike
-  | Mystery of bool
+  | Mystery of bool (* false = disabled *)
   | Switch
   (* Items *)
   | Mushroom
@@ -21,7 +21,7 @@ type t =
   (* Ennemis *)
   | Enemy of enemy
   (* Projectiles *)
-  | Fire of float option
+  | Fire of float option (* dt_init *)
 
 (* Matrice des plateformes *)
 type level = t array array 

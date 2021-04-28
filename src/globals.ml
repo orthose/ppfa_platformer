@@ -31,7 +31,7 @@ let distance_fire = 32. *. 10.
 (* Durée de vie des objets *)
 let life_player = 5
 let life_goomba = 3
-let life_boo = 100 (* Boo est immortel *)
+(* Boo est immortel *)
 let lifespan_mushroom = 5000.
 let lifespan_fire = 3000.
 

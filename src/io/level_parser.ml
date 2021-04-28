@@ -12,7 +12,7 @@ let link = function
   | '?' -> Mystery true
   | '!' -> Switch
   | '$' -> Coin 
-  | 'g' -> Enemy (Goomba 0.0)
+  | 'g' -> Enemy (Goomba (0.0, Globals.life_goomba))
   | 'b' -> Enemy Boo
   | _ -> failwith "Unknown token"
 

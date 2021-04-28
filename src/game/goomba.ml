@@ -29,16 +29,16 @@ let create level =
   
   (* Fonction de déplacement automatique *)
   let move (init_pos:Vector.t) e dt =
-    (* Temps auquel a été touché goomba *)
-    let dt_hit =
+    (* Temps auquel a été touché goomba et vie *)
+    let (dt_hit, life) =
       match ElementGrid.get e with
-      | Enemy Goomba dt_hit -> dt_hit
+      | Enemy (Goomba (dt_hit, life)) -> dt_hit, life
       | _ -> failwith "Goomba is not a goomba"
     in
     (* Temps d'invincibilité de Goomba *)
     if dt -. dt_hit >= Globals.immortal_time_goomba then
       (* Goomba est mort *)
-      if Life.get e <= 0 then
+      if life <= 0 then
         remove e
       (* Goomba avance *)
       else
@@ -81,8 +81,8 @@ let create level =
   in 
   (* Appel de la fonction de création d'ennemi *)
   Abstract_enemy.create
-  "goomba" (Goomba 0.0) Vector.zero
-  box sprite_right 10. (Globals.life_goomba) true move level
+  "goomba" (Goomba (0.0, (Globals.life_goomba))) Vector.zero
+  box sprite_right 10. true move level
   
 let flatten dt e =
   let sprite_flatten_left = 
@@ -99,8 +99,12 @@ let flatten dt e =
       Globals.unit_box.width
       Globals.unit_box.height
   in
-  ElementGrid.set e (Enemy (Goomba dt));
-  Life.set e (Life.get e - 1);
+  let life =
+    match ElementGrid.get e with
+    | Enemy (Goomba (_, life)) -> life
+    | _ -> failwith "Goomba is not a goomba"
+  in
+  ElementGrid.set e (Enemy (Goomba (dt, (life - 1)) ) );
   let v = 
     match Velocity.get e with 
     | Physical v -> v

@@ -3,7 +3,7 @@ open System_defs
 open Level
 open Ecs
 
-let create name enemy velocity box texture mass life gravity move level =
+let create name enemy velocity box texture mass gravity move level =
   (* Parcours de tous les ennemis du niveau *)
   List.fold_left (fun acc Vector.{x = x; y = y} ->
     let e = Entity.create () in
@@ -21,7 +21,6 @@ let create name enemy velocity box texture mass life gravity move level =
     Friction.set e (-.0.25);
     Surface.set e texture;
     Resting.set e Entity.dummy;
-    Life.set e life;
     Ai.set e (move Vector.{x = x; y = y} e);
       
     (* systems *)
@@ -64,7 +63,6 @@ let remove e gravity =
       Friction.delete e;
       Surface.delete e;
       Resting.delete e;
-      Life.delete e;
       Ai.delete e;
       if gravity then 
         SumForces.delete e;

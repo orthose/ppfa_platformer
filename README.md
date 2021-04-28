@@ -161,9 +161,7 @@ automatique pour l'IA et d'un système de suppression d'entité pour
 
 * Dans src/component/component_defs.ml vous trouverez l'ensemble des
 composants. J'en ai ajouté un certain nombre comme Friction, Elasticity
-qui sont utilisés par le système de collision. Life pour enregistrer
-la vie restante des goomba. Ai pour sauvegarder les fonctions de déplacement
-exécutées par Autopilot_S. Remove pour les fonctions de suppression exécutées
+qui sont utilisés par le système de collision. Ai pour sauvegarder les fonctions de déplacement exécutées par Autopilot_S. Remove pour les fonctions de suppression exécutées
 par Remove_S.
 
 * Le composant qui est sûrement le plus important est ElementGrid qui est
