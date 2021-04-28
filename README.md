@@ -38,7 +38,8 @@ dans resources/files/
 * Attention sous firefox il faut cliquer dans l'écran pour obtenir le focus sinon il est impossible de bouger Mario !
 
 * Les touches de contrôle sont les classiques Z, Q, S, D (en supposant
-que vous disposez d'un clavier azerty). Pour tirer une boule de feu
+que vous disposez d'un clavier azerty). J'ai également ajouté la possibilité
+d'utiliser les touches fléchées. Pour tirer une boule de feu
 lorsque vous êtes Mario Fire utilisez P.
 
 # Comment créer un niveau ?

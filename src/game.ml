@@ -94,6 +94,16 @@ let init_game _dt =
   Input_handler.register_command (KeyUp "d") (Player.stop_run_right);
   Input_handler.register_command (KeyDown "p") (Player.fire);
   
+  (* Touches fléchées pour les joueurs anti-ZQSD ;) *)
+  Input_handler.register_command (KeyDown "ArrowUp") (Player.jump);
+  Input_handler.register_command (KeyUp "ArrowUp") (Player.stop_jump);
+  Input_handler.register_command (KeyDown "ArrowLeft") (Player.run_left);
+  Input_handler.register_command (KeyUp "ArrowLeft") (Player.stop_run_left);
+  Input_handler.register_command (KeyDown "ArrowDown") (Player.fall);
+  Input_handler.register_command (KeyUp "ArrowDown") (Player.stop_fall);
+  Input_handler.register_command (KeyDown "ArrowRight") (Player.run_right);
+  Input_handler.register_command (KeyUp "ArrowRight") (Player.stop_run_right);
+  
   Random.self_init ();
   System.init_all ();
   false
