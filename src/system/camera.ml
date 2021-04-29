@@ -29,9 +29,13 @@ let scrolling pos =
     x = pos.x -. xr; 
     y = pos.y -. yr
   }
-  
-(*let is_in_screen pos =*)
-  
+
+(* Est-ce que l'élément à la position pos est actuellement
+affiché à l'écran ? On suppose que notre jeu est uniquement
+en scrolling horizontal *)
+let is_displayed pos =
+  let spos = scrolling pos in
+  0. <= spos.x && spos.x < (float)Globals.canvas_width 
   
   
   

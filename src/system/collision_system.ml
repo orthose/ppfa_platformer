@@ -98,7 +98,7 @@ let compute_collision dt e1 e2 pos1 pos2 =
     if CollisionResolver.has_component e1 then (CollisionResolver.get e1) dt side e1 e2;
     (*if CollisionResolver.has_component e2 then (CollisionResolver.get e2) e2 e1*)
   end
-
+let player = Game_state.get_player ()
 let update dt el =
   List.iter (fun e1 ->
     List.iter (fun e2 ->
@@ -107,6 +107,7 @@ let update dt el =
          Il faudra améliorer cela si on a beaucoup (> 30) objets simultanément.
       *)
       if e1 <> e2 then
+      begin
         
         (* Entité simple joueur ou ennemi *)
         let pos1 =
@@ -114,23 +115,22 @@ let update dt el =
           | Point pos -> pos
           | _ -> failwith "Basic entity has only simple position"
         in
-        
-        (* Le système de collision doit faire la différence
-        entre une box simple et une liste de box issue du
-        parser de niveau *)
         match Position.get e2 with
         | Point pos2 ->
+            if Vector.dist pos1 pos2 
+            <= Globals.circle_collision then
             compute_collision dt
             e1 e2
             pos1 pos2
         | MultiPoint lpos ->
-            (* TODO: Améliorer en ne regardant que les objets proches 
-            de e1 et dans l'écran *)
             List.iter (fun pos2 ->
+              if Vector.dist pos1 pos2 
+              <= Globals.circle_collision then
               compute_collision dt
               e1 e2
               pos1 pos2
               ) lpos
+      end;
     ) el) (
       (Game_state.get_player ()) 
       :: (List.filter_map (fun (e, v) ->

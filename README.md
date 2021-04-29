@@ -221,6 +221,15 @@ mais pas au bout d'un certain temps. Il est nécessaire de supprimer les boules 
 Mais heureusement depuis CollisionResolver on a accès à l'argument dt. 
 J'ai dû utiliser un float option (None, Some) pour initialiser le temps de création de la boule de feu.
 
+* Le nombre de FPS était très bas (environ 30 FPS). J'ai décidé d'introduire une
+constante appelée cercle de collision dans Globals. J'ai ajouté la fonction pour
+calculer la distance euclidienne dans Vector. Ainsi, je ne calcule la collision entre
+2 objets que s'ils sont à une distance inférieure ou égale à cette constante.
+Cela a permis de faire remonter le nombre de FPS à quasiment 60, sans pour autant
+casser quoi que ce soit. Car au départ, j'essayais de calculer la collision uniquement
+pour les objets affichés à l'écran, mais cela n'allait pas, cela créait des bogues
+supplémentaires.
+
 * Bogue non-résolu : En restant appuyé sur gauche et en fonçant dans un mur, Mario
 est absorbé petit à petit par la plateforme. Mais dans l'autre sens en restant appuyé
 sur droite et en fonçant dans un mur le bogue n'intervient pas ! En affichant la

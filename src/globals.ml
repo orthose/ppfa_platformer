@@ -15,6 +15,7 @@ let right = Vector.{ x = 0.05 ; y = 0.0 }
 let down = Vector.{ x = 0.0; y = 0.02 }
 let activate_max_velocity = true
 let max_velocity = 1.0
+let circle_collision = 100.
 
 (* Scrolling vertical *)
 let y_scroll = false

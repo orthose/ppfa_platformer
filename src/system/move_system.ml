@@ -17,7 +17,7 @@ let update dt el =
       | Physical v -> v
       | Animation _ -> Vector.zero
       ) in
+    (* On évite de mettre à jour les objets qui ne bougent pas *)
     if not (Vector.is_zero speed) then
-      (* On évite de mettre à jour les objets qui ne bougent pas *)
       Position.set e (Point (Vector.add pos speed))
     ) el

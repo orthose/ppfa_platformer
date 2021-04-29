@@ -71,7 +71,7 @@ let create level =
           else -1.0
       in
       let f = SumForces.get e in
-      let new_f = Vector.add f { x = 0.02 *. dir; y = 0.0 } in
+      let new_f = Vector.add f { x = 0.02 *. dir; y = -.0.0 } in
       SumForces.set e new_f
   in
   
@@ -82,7 +82,7 @@ let create level =
   (* Appel de la fonction de création d'ennemi *)
   Abstract_enemy.create
   "goomba" (Goomba (0.0, (Globals.life_goomba))) Vector.zero
-  box sprite_right 10. true move level
+  box sprite_right 10.0 true move level
   
 let flatten dt e =
   let sprite_flatten_left = 
