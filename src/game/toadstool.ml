@@ -21,7 +21,7 @@ let create name level =
     Globals.unit_box.Rect.height
     );
   (* Effet de rebond en augmentant l'élasticité *)
-  Elasticity.set e 0.95;
+  Elasticity.set e 1.0;
   Friction.set e (-0.25);
 
   (* Systems *)

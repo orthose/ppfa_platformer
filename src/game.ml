@@ -19,6 +19,8 @@ let current_level = ref 0
 let levels = [|
   ("level1.txt", "bg-hill.png");
   ("level2.txt", "bg-hill-cloud.png");
+  ("level3.txt", "bg-forest-winter.png");
+  ("level4.txt", "bg-desert.png");
 |]
 
 let next_level () =

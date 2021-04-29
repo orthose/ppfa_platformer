@@ -21,7 +21,7 @@ let create name level =
     Globals.unit_box.Rect.height
     );
   Elasticity.set e 0.0;
-  Friction.set e (-.0.75);
+  Friction.set e (-.0.45);
 
   (* Systems *)
   Collision_S.register e;
